@@ -1,0 +1,99 @@
+name: Build & Sign HarmonyOS HAP
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:  # 手动触发
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. checkout 主仓库（包含 ohos submodule）
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      # 2. 同步主仓库 lib/ 到 ohos_shell
+      - name: Sync lib from main project
+        run: |
+          cp -r lib/. ohos/ohos_shell/lib/
+          # 替换包名
+          find ohos/ohos_shell/lib -name "*.dart" | \
+            xargs sed -i 's|package:bugaoshan/|package:bugaoshan_ohos/|g'
+          cp -r assets ohos/ohos_shell/
+
+      # 3. 安装 Java 17
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      # 4. 配置 HarmonyOS 环境（oh-action）
+      - name: Setup OpenHarmony environment
+        uses: Snapp-Mobile/oh-action@v0.1
+
+      # 5. clone Flutter-OH SDK
+      - name: Clone Flutter-OH SDK
+        run: |
+          git clone --depth=1 \
+            -b oh-3.35.7-dev \
+            https://gitcode.com/openharmony-tpc/flutter_flutter.git \
+            $HOME/flutter_ohos
+          echo "$HOME/flutter_ohos/bin" >> $GITHUB_PATH
+
+      # 6. 配置环境变量
+      - name: Set environment variables
+        run: |
+          echo "PUB_HOSTED_URL=https://pub.flutter-io.cn" >> $GITHUB_ENV
+          echo "FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn" >> $GITHUB_ENV
+          echo "FLUTTER_GIT_URL=https://gitcode.com/openharmony-tpc/flutter_flutter.git" >> $GITHUB_ENV
+
+      # 7. Flutter pub get
+      - name: Flutter pub get
+        working-directory: ohos/ohos_shell
+        run: flutter pub get
+
+      # 8. 还原签名文件
+      - name: Restore signing files
+        run: |
+          mkdir -p ~/.ohos/config
+          echo "${{ secrets.OHOS_P12_BASE64 }}" | base64 -d > ~/.ohos/config/signing.p12
+          echo "${{ secrets.OHOS_CER_BASE64 }}" | base64 -d > ~/.ohos/config/signing.cer
+          echo "${{ secrets.OHOS_P7B_BASE64 }}" | base64 -d > ~/.ohos/config/signing.p7b
+
+      # 9. 构建未签名 HAP（signingConfigs 为空）
+      - name: Build unsigned HAP
+        working-directory: ohos/ohos_shell
+        run: flutter build hap --release
+
+      # 10. 手动签名（用 hap-sign-tool.jar 绕过 hvigor 加密密码要求）
+      - name: Sign HAP
+        run: |
+          UNSIGNED_HAP=$(find ohos/ohos_shell -name "*.hap" | head -1)
+          HAP_SIGN_TOOL=$(find $HOME -name "hap-sign-tool.jar" 2>/dev/null | head -1)
+
+          java -jar $HAP_SIGN_TOOL sign-app \
+            -keyAlias "debugKey" \
+            -signAlg "SHA256withECDSA" \
+            -mode "localSign" \
+            -appCertFile ~/.ohos/config/signing.cer \
+            -profileFile ~/.ohos/config/signing.p7b \
+            -inFile "$UNSIGNED_HAP" \
+            -keystoreFile ~/.ohos/config/signing.p12 \
+            -outFile /tmp/bugaoshan-signed.hap \
+            -keyPwd "${{ secrets.OHOS_P12_PASSWORD }}" \
+            -keystorePwd "${{ secrets.OHOS_P12_PASSWORD }}"
+
+      # 11. 上传产物
+      - name: Upload HAP artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: bugaoshan-ohos-${{ github.sha }}
+          path: /tmp/bugaoshan-signed.hap
+          retention-days: 30
