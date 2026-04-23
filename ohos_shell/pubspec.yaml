@@ -1,0 +1,93 @@
+name: bugaoshan_ohos
+description: HarmonyOS shell for Bugaoshan
+publish_to: none
+version: 0.5.6
+
+environment:
+  sdk: '>=3.7.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+  photo_view: ^0.15.0
+  get_it: ^9.2.0
+  injectable: any
+  flutter_colorpicker: any
+  http: ^1.2.0
+  hive_ce: ^2.19.3
+  dart_sm: ^0.1.4
+  async: any
+  web: any
+  shared_preferences: any
+  path_provider: any
+  url_launcher: any
+  package_info_plus: any
+  flutter_secure_storage: any
+
+dependency_overrides:
+  # shared_preferences
+  shared_preferences:
+    git:
+      url: "https://gitcode.com/openharmony-tpc/flutter_packages.git"
+      path: "packages/shared_preferences/shared_preferences"
+  shared_preferences_ohos:
+    git:
+      url: "https://gitcode.com/openharmony-tpc/flutter_packages.git"
+      path: "packages/shared_preferences/shared_preferences_ohos"
+  shared_preferences_foundation:
+    git:
+      url: "https://gitcode.com/openharmony-tpc/flutter_packages.git"
+      path: "packages/shared_preferences/shared_preferences_foundation"
+
+  # path_provider
+  path_provider:
+    git:
+      url: "https://gitcode.com/openharmony-tpc/flutter_packages.git"
+      path: "packages/path_provider/path_provider"
+  path_provider_ohos:
+    git:
+      url: "https://gitcode.com/openharmony-tpc/flutter_packages.git"
+      path: "packages/path_provider/path_provider_ohos"
+  path_provider_foundation:
+    git:
+      url: "https://gitcode.com/openharmony-tpc/flutter_packages.git"
+      path: "packages/path_provider/path_provider_foundation"
+
+  # url_launcher
+  url_launcher:
+    git:
+      url: "https://gitcode.com/openharmony-tpc/flutter_packages.git"
+      path: "packages/url_launcher/url_launcher"
+  url_launcher_ohos:
+    git:
+      url: "https://gitcode.com/openharmony-tpc/flutter_packages.git"
+      path: "packages/url_launcher/url_launcher_ohos"
+
+  # flutter_secure_storage（独立仓库，路径已验证）
+  flutter_secure_storage:
+    git:
+      url: "https://gitcode.com/openharmony-sig/fluttertpc_flutter_secure_storage.git"
+      path: "flutter_secure_storage"
+  flutter_secure_storage_ohos:
+    git:
+      url: "https://gitcode.com/openharmony-sig/fluttertpc_flutter_secure_storage.git"
+      path: "flutter_secure_storage_ohos"
+  flutter_secure_storage_platform_interface:
+    git:
+      url: "https://gitcode.com/openharmony-sig/fluttertpc_flutter_secure_storage.git"
+      path: "flutter_secure_storage_platform_interface"
+
+  # package_info_plus
+  package_info_plus:
+    git:
+      url: "https://gitcode.com/openharmony-sig/flutter_plus_plugins.git"
+      path: "packages/package_info_plus/package_info_plus"
+
+flutter:
+  uses-material-design: true
+  generate: true
+  assets:
+    - assets/avater.png

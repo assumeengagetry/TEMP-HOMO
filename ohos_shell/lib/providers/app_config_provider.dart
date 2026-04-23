@@ -1,0 +1,94 @@
+﻿import 'dart:ui';
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart' show Colors;
+import 'package:bugaoshan_ohos/utils/locale_utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+//define key
+const String _keyLocale = 'locale';
+const String _keyCardSizeAnimationDuration = 'cardSizeAnimationDuration';
+const String _keyThemeColor = 'themeColor';
+const String _keyColorOpacity = 'colorOpacity';
+const String _keyCourseCardFontSize = 'courseCardFontSize';
+const String _keyShowCourseGrid = 'showCourseGrid';
+const String _keyCourseRowHeight = 'courseRowHeight';
+
+class AppConfigProvider {
+  final SharedPreferences _sharedPreferences;
+
+  AppConfigProvider(this._sharedPreferences) {
+    _loadLocale();
+    _addSaveCallback();
+  }
+
+  //variable
+  final ValueNotifier<Locale?> locale = ValueNotifier<Locale?>(null);
+  final ValueNotifier<Duration> cardSizeAnimationDuration =
+      ValueNotifier<Duration>(const Duration(milliseconds: 300));
+  final ValueNotifier<Color> themeColor = ValueNotifier<Color>(
+    Colors.blueAccent,
+  );
+  final ValueNotifier<double> colorOpacity = ValueNotifier<double>(0.85);
+  final ValueNotifier<double> courseCardFontSize = ValueNotifier<double>(13.0);
+  final ValueNotifier<bool> showCourseGrid = ValueNotifier<bool>(true);
+  final ValueNotifier<double> courseRowHeight = ValueNotifier<double>(72.0);
+
+  void _loadLocale() {
+    final localeString = _sharedPreferences.getString(_keyLocale);
+    locale.value = parseLocale(localeString);
+    cardSizeAnimationDuration.value = Duration(
+      milliseconds:
+          _sharedPreferences.getInt(_keyCardSizeAnimationDuration) ?? 300,
+    );
+    themeColor.value = Color(
+      _sharedPreferences.getInt(_keyThemeColor) ?? Colors.blueAccent.toARGB32(),
+    );
+    colorOpacity.value = _sharedPreferences.getDouble(_keyColorOpacity) ?? 0.85;
+    courseCardFontSize.value =
+        _sharedPreferences.getDouble(_keyCourseCardFontSize) ?? 14.0;
+    showCourseGrid.value =
+        _sharedPreferences.getBool(_keyShowCourseGrid) ?? true;
+    courseRowHeight.value =
+        _sharedPreferences.getDouble(_keyCourseRowHeight) ?? 72.0;
+  }
+
+  void _addSaveCallback() {
+    locale.addListener(() {
+      if (locale.value != null) {
+        _sharedPreferences.setString(_keyLocale, locale.value!.toLanguageTag());
+      } else {
+        _sharedPreferences.remove(_keyLocale);
+      }
+    });
+    cardSizeAnimationDuration.addListener(() {
+      _sharedPreferences.setInt(
+        _keyCardSizeAnimationDuration,
+        cardSizeAnimationDuration.value.inMilliseconds,
+      );
+    });
+    themeColor.addListener(() {
+      _sharedPreferences.setInt(_keyThemeColor, themeColor.value.toARGB32());
+    });
+    colorOpacity.addListener(() {
+      _sharedPreferences.setDouble(_keyColorOpacity, colorOpacity.value);
+    });
+    courseCardFontSize.addListener(() {
+      _sharedPreferences.setDouble(
+        _keyCourseCardFontSize,
+        courseCardFontSize.value,
+      );
+    });
+    showCourseGrid.addListener(() {
+      _sharedPreferences.setBool(_keyShowCourseGrid, showCourseGrid.value);
+    });
+    courseRowHeight.addListener(() {
+      _sharedPreferences.setDouble(_keyCourseRowHeight, courseRowHeight.value);
+    });
+  }
+
+  void clearAll() {
+    _sharedPreferences.clear();
+    _loadLocale();
+  }
+}
