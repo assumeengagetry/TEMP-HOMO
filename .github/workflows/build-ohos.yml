@@ -186,10 +186,11 @@ jobs:
 
       - name: Clone Flutter-OH SDK
         run: |
-          git clone --depth=1 \
+          git clone \
             --branch "${FLUTTER_OH_REF}" \
             "${FLUTTER_OH_REPO}" \
             "${HOME}/flutter_ohos"
+          git -C "${HOME}/flutter_ohos" fetch --tags --force
           echo "${HOME}/flutter_ohos/bin" >> "${GITHUB_PATH}"
 
       - name: Create Flutter version cache
@@ -197,30 +198,49 @@ jobs:
           FRAMEWORK_REVISION="$(git -C "${HOME}/flutter_ohos" rev-parse HEAD)"
           FRAMEWORK_COMMIT_DATE="$(git -C "${HOME}/flutter_ohos" log -1 --date='format:%Y-%m-%d %H:%M:%S %z' --pretty=format:%cd)"
           ENGINE_REVISION="$(cat "${HOME}/flutter_ohos/bin/internal/engine.version")"
+          FRAMEWORK_VERSION="$(git -C "${HOME}/flutter_ohos" tag --points-at HEAD | grep -E '^[0-9]+\.[0-9]+\.[0-9]+(-ohos([-.][A-Za-z0-9]+)*)?$' | head -1 || true)"
+
+          if [[ -z "${FRAMEWORK_VERSION}" ]]; then
+            FRAMEWORK_VERSION="${FLUTTER_OH_VERSION}"
+          fi
 
           mkdir -p "${HOME}/flutter_ohos/bin/cache"
-          cat > "${HOME}/flutter_ohos/bin/cache/flutter.version.json" <<EOF
-          {
-            "frameworkVersion": "${FLUTTER_OH_VERSION}",
-            "channel": "[user-branch]",
-            "repositoryUrl": "${FLUTTER_OH_REPO}",
-            "frameworkRevision": "${FRAMEWORK_REVISION}",
-            "frameworkCommitDate": "${FRAMEWORK_COMMIT_DATE}",
-            "engineRevision": "${ENGINE_REVISION}",
-            "engineCommitDate": null,
-            "engineContentHash": null,
-            "engineBuildDate": null,
-            "dartSdkVersion": "${FLUTTER_OH_DART_VERSION}",
-            "devToolsVersion": "${FLUTTER_OH_DEVTOOLS_VERSION}",
-            "flutterVersion": "${FLUTTER_OH_VERSION}"
-          }
-          EOF
+          export FRAMEWORK_VERSION FRAMEWORK_REVISION FRAMEWORK_COMMIT_DATE ENGINE_REVISION
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
 
-          echo "${FLUTTER_OH_VERSION}" > "${HOME}/flutter_ohos/version"
+          data = {
+              "frameworkVersion": os.environ["FRAMEWORK_VERSION"],
+              "channel": "[user-branch]",
+              "repositoryUrl": os.environ["FLUTTER_OH_REPO"],
+              "frameworkRevision": os.environ["FRAMEWORK_REVISION"],
+              "frameworkCommitDate": os.environ["FRAMEWORK_COMMIT_DATE"],
+              "engineRevision": os.environ["ENGINE_REVISION"],
+              "engineCommitDate": None,
+              "engineContentHash": None,
+              "engineBuildDate": None,
+              "dartSdkVersion": os.environ["FLUTTER_OH_DART_VERSION"],
+              "devToolsVersion": os.environ["FLUTTER_OH_DEVTOOLS_VERSION"],
+              "flutterVersion": os.environ["FRAMEWORK_VERSION"],
+          }
+
+          path = Path(os.environ["HOME"]) / "flutter_ohos" / "bin" / "cache" / "flutter.version.json"
+          path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+          version_path = Path(os.environ["HOME"]) / "flutter_ohos" / "version"
+          version_path.write_text(os.environ["FRAMEWORK_VERSION"] + "\n", encoding="utf-8")
+          PY
+
+          cat "${HOME}/flutter_ohos/bin/cache/flutter.version.json"
 
       - name: Show Flutter-OH version
         run: |
-          flutter --version
+          flutter --version | tee /tmp/flutter-version.txt
+          if grep -q '0.0.0-unknown' /tmp/flutter-version.txt; then
+            echo "Flutter-OH SDK version is still unresolved" >&2
+            exit 1
+          fi
 
       - name: Create OHOS package.json
         run: |
