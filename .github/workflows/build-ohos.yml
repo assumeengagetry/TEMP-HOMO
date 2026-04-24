@@ -32,6 +32,9 @@ permissions:
 env:
   FLUTTER_OH_REPO: https://gitcode.com/openharmony-tpc/flutter_flutter.git
   FLUTTER_OH_REF: oh-3.35.7-dev
+  FLUTTER_OH_VERSION: 3.35.8-ohos-0.0.3
+  FLUTTER_OH_DART_VERSION: 3.9.2
+  FLUTTER_OH_DEVTOOLS_VERSION: 2.48.0
 
 jobs:
   build:
@@ -188,6 +191,36 @@ jobs:
             "${FLUTTER_OH_REPO}" \
             "${HOME}/flutter_ohos"
           echo "${HOME}/flutter_ohos/bin" >> "${GITHUB_PATH}"
+
+      - name: Create Flutter version cache
+        run: |
+          FRAMEWORK_REVISION="$(git -C "${HOME}/flutter_ohos" rev-parse HEAD)"
+          FRAMEWORK_COMMIT_DATE="$(git -C "${HOME}/flutter_ohos" log -1 --date='format:%Y-%m-%d %H:%M:%S %z' --pretty=format:%cd)"
+          ENGINE_REVISION="$(cat "${HOME}/flutter_ohos/bin/internal/engine.version")"
+
+          mkdir -p "${HOME}/flutter_ohos/bin/cache"
+          cat > "${HOME}/flutter_ohos/bin/cache/flutter.version.json" <<EOF
+          {
+            "frameworkVersion": "${FLUTTER_OH_VERSION}",
+            "channel": "[user-branch]",
+            "repositoryUrl": "${FLUTTER_OH_REPO}",
+            "frameworkRevision": "${FRAMEWORK_REVISION}",
+            "frameworkCommitDate": "${FRAMEWORK_COMMIT_DATE}",
+            "engineRevision": "${ENGINE_REVISION}",
+            "engineCommitDate": null,
+            "engineContentHash": null,
+            "engineBuildDate": null,
+            "dartSdkVersion": "${FLUTTER_OH_DART_VERSION}",
+            "devToolsVersion": "${FLUTTER_OH_DEVTOOLS_VERSION}",
+            "flutterVersion": "${FLUTTER_OH_VERSION}"
+          }
+          EOF
+
+          echo "${FLUTTER_OH_VERSION}" > "${HOME}/flutter_ohos/version"
+
+      - name: Show Flutter-OH version
+        run: |
+          flutter --version
 
       - name: Create OHOS package.json
         run: |
