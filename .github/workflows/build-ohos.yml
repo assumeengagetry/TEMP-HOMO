@@ -104,6 +104,15 @@ jobs:
           cp source/pubspec.yaml wrapper/ohos_shell/pubspec.yaml
           cp source/l10n.yaml wrapper/ohos_shell/l10n.yaml
 
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path("wrapper/ohos_shell/pubspec.yaml")
+          text = path.read_text(encoding="utf-8")
+          text = text.replace("sdk: ^3.10.4", "sdk: '>=3.9.0 <4.0.0'")
+          path.write_text(text, encoding="utf-8")
+          PY
+
           if grep -q '^dependency_overrides:' wrapper/ohos_shell/pubspec.yaml; then
             echo "wrapper/ohos_shell/pubspec.yaml already contains dependency_overrides; merge OHOS overrides manually first." >&2
             exit 1
