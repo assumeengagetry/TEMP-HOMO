@@ -180,17 +180,20 @@ jobs:
             "${HOME}/flutter_ohos"
           echo "${HOME}/flutter_ohos/bin" >> "${GITHUB_PATH}"
 
-      - name: Patch OHOS package.json
+      - name: Create OHOS package.json
         run: |
           python3 - <<'PY'
           import json
           import os
           from pathlib import Path
-
+          
           path = Path("wrapper/ohos_shell/ohos/package.json")
-          data = json.loads(path.read_text(encoding="utf-8"))
-          data.setdefault("dependencies", {})
-          data["dependencies"]["flutter-hvigor-plugin"] = f"file:{os.environ['HOME']}/flutter_ohos/packages/flutter_tools/hvigor"
+          data = {
+              "dependencies": {
+                  "flutter-hvigor-plugin": f"file:{os.environ['HOME']}/flutter_ohos/packages/flutter_tools/hvigor"
+              }
+          }
+          path.parent.mkdir(parents=True, exist_ok=True)
           path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
           PY
 
