@@ -38,7 +38,7 @@ env:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Resolve build context
@@ -203,6 +203,17 @@ jobs:
           distribution: temurin
           java-version: "17"
 
+      - name: Install Linux dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl xz-utils zip libgl1-mesa-dev
+
+      - name: Setup OpenHarmony CLI tools
+        uses: ErBWs/setup-ohos@v1
+        with:
+          version: latest
+          cache: true
+
       - name: Clone Flutter-OH SDK
         run: |
           git clone \
@@ -296,10 +307,9 @@ jobs:
         working-directory: wrapper/ohos_shell
         run: flutter gen-l10n
 
-      - name: Setup OpenHarmony environment
-        uses: Snapp-Mobile/oh-action@v0.1
-        with:
-          working-directory: wrapper/ohos_shell/ohos
+      - name: Verify OpenHarmony toolchain
+        working-directory: wrapper/ohos_shell/ohos
+        run: ./hvigorw -v
 
       - name: Flutter doctor
         working-directory: wrapper/ohos_shell
