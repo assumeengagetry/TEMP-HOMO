@@ -113,8 +113,27 @@ jobs:
           path = Path("wrapper/ohos_shell/pubspec.yaml")
           text = path.read_text(encoding="utf-8")
           text = text.replace("sdk: ^3.10.4", "sdk: '>=3.9.0 <4.0.0'")
+          text = "\n".join(
+              line
+              for line in text.splitlines()
+              if not line.lstrip().startswith("flutter_litert:")
+          ) + "\n"
           path.write_text(text, encoding="utf-8")
           PY
+
+          cat > wrapper/ohos_shell/lib/serivces/ocr_service.dart <<'EOF'
+          import 'dart:typed_data';
+
+          class OcrService {
+            static Future<void> init() async {}
+
+            static Future<void> dispose() async {}
+
+            static Future<String> performOcr(Uint8List imageBytes) async {
+              return '';
+            }
+          }
+          EOF
 
           if grep -q '^dependency_overrides:' wrapper/ohos_shell/pubspec.yaml; then
             echo "wrapper/ohos_shell/pubspec.yaml already contains dependency_overrides; merge OHOS overrides manually first." >&2
@@ -286,13 +305,6 @@ jobs:
         working-directory: wrapper/ohos_shell
         run: flutter doctor -v
 
-      - name: Restore signing files
-        run: |
-          mkdir -p ~/.ohos/config
-          echo "${{ secrets.OHOS_P12_BASE64 }}" | base64 -d > ~/.ohos/config/signing.p12
-          echo "${{ secrets.OHOS_CER_BASE64 }}" | base64 -d > ~/.ohos/config/signing.cer
-          echo "${{ secrets.OHOS_P7B_BASE64 }}" | base64 -d > ~/.ohos/config/signing.p7b
-
       - name: Build unsigned HAP
         working-directory: wrapper/ohos_shell
         run: flutter build hap --release
@@ -306,47 +318,13 @@ jobs:
             exit 1
           fi
 
-          HAP_SIGN_TOOL="$(find "${HOME}" /opt -type f -name 'hap-sign-tool.jar' 2>/dev/null | head -1)"
-          if [[ -z "${HAP_SIGN_TOOL}" ]]; then
-            echo "hap-sign-tool.jar not found" >&2
-            exit 1
-          fi
-
           echo "unsigned_hap=${UNSIGNED_HAP}" >> "${GITHUB_OUTPUT}"
-          echo "hap_sign_tool=${HAP_SIGN_TOOL}" >> "${GITHUB_OUTPUT}"
-
-      - name: Sign HAP
-        id: sign
-        env:
-          OHOS_KEY_ALIAS: ${{ secrets.OHOS_KEY_ALIAS }}
-          OHOS_KEY_PASSWORD: ${{ secrets.OHOS_KEY_PASSWORD }}
-          OHOS_KEYSTORE_PASSWORD: ${{ secrets.OHOS_KEYSTORE_PASSWORD }}
-          OHOS_P12_PASSWORD: ${{ secrets.OHOS_P12_PASSWORD }}
-        run: |
-          SIGNED_HAP="/tmp/bugaoshan-ohos-${{ steps.ctx.outputs.version }}-signed.hap"
-          KEY_ALIAS="${OHOS_KEY_ALIAS:-debugKey}"
-          KEY_PASSWORD="${OHOS_KEY_PASSWORD:-$OHOS_P12_PASSWORD}"
-          KEYSTORE_PASSWORD="${OHOS_KEYSTORE_PASSWORD:-$OHOS_P12_PASSWORD}"
-
-          java -jar "${{ steps.build.outputs.hap_sign_tool }}" sign-app \
-            -keyAlias "${KEY_ALIAS}" \
-            -signAlg "SHA256withECDSA" \
-            -mode "localSign" \
-            -appCertFile ~/.ohos/config/signing.cer \
-            -profileFile ~/.ohos/config/signing.p7b \
-            -inFile "${{ steps.build.outputs.unsigned_hap }}" \
-            -keystoreFile ~/.ohos/config/signing.p12 \
-            -outFile "${SIGNED_HAP}" \
-            -keyPwd "${KEY_PASSWORD}" \
-            -keystorePwd "${KEYSTORE_PASSWORD}"
-
-          echo "signed_hap=${SIGNED_HAP}" >> "${GITHUB_OUTPUT}"
 
       - name: Upload HAP artifact
         uses: actions/upload-artifact@v4
         with:
-          name: bugaoshan-ohos-${{ steps.ctx.outputs.version }}
-          path: ${{ steps.sign.outputs.signed_hap }}
+          name: bugaoshan-ohos-${{ steps.ctx.outputs.version }}-unsigned
+          path: ${{ steps.build.outputs.unsigned_hap }}
           retention-days: 30
 
       - name: Create GitHub Release
@@ -354,13 +332,14 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.ctx.outputs.version }}
-          name: HarmonyOS ${{ steps.ctx.outputs.version }}
+          name: HarmonyOS ${{ steps.ctx.outputs.version }} unsigned
           body: |
             Source repo: `${{ steps.ctx.outputs.source_repo }}`
             Source ref: `${{ steps.ctx.outputs.source_ref }}`
             Source sha: `${{ steps.ctx.outputs.source_sha }}`
             Flutter-OH ref: `${{ env.FLUTTER_OH_REF }}`
+            Artifact: unsigned HAP
           files: |
-            ${{ steps.sign.outputs.signed_hap }}
+            ${{ steps.build.outputs.unsigned_hap }}
           draft: false
           prerelease: ${{ contains(steps.ctx.outputs.version, '-') }}
