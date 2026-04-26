@@ -318,15 +318,40 @@ jobs:
         run: flutter doctor -v
 
       - name: Build unsigned HAP
+        id: hap
         working-directory: wrapper/ohos_shell
-        run: flutter build hap --release
+        run: |
+          set +e
+          flutter build hap --release 2>&1 | tee /tmp/flutter-build-hap.log
+          BUILD_EXIT=${PIPESTATUS[0]}
+          echo "build_exit=${BUILD_EXIT}" >> "${GITHUB_OUTPUT}"
+
+          if [[ "${BUILD_EXIT}" -eq 0 ]]; then
+            exit 0
+          fi
+
+          if grep -q '请通过DevEco Studio打开ohos工程后配置调试签名' /tmp/flutter-build-hap.log; then
+            echo "flutter build hap expected a signed HAP; continuing because CI publishes unsigned artifacts only."
+            exit 0
+          fi
+
+          exit "${BUILD_EXIT}"
 
       - name: Find build outputs
         id: build
         run: |
-          UNSIGNED_HAP="$(find wrapper/ohos_shell -type f -name '*.hap' ! -name '*signed*' | head -1)"
+          find wrapper/ohos_shell -type f -name '*.hap' | sort
+
+          UNSIGNED_HAP="$(find wrapper/ohos_shell -type f -name '*unsigned.hap' | sort | head -1)"
+          if [[ -z "${UNSIGNED_HAP}" ]]; then
+            UNSIGNED_HAP="$(find wrapper/ohos_shell -type f -name '*.hap' ! -name '*signed*' | sort | head -1)"
+          fi
+
           if [[ -z "${UNSIGNED_HAP}" ]]; then
             echo "Unsigned HAP not found" >&2
+            if [[ -f /tmp/flutter-build-hap.log ]]; then
+              tail -n 200 /tmp/flutter-build-hap.log >&2
+            fi
             exit 1
           fi
 
