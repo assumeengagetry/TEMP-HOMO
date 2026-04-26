@@ -121,8 +121,10 @@ jobs:
           path.write_text(text, encoding="utf-8")
           PY
 
-          cat > wrapper/ohos_shell/lib/serivces/ocr_service.dart <<'EOF'
-          import 'dart:typed_data';
+          python3 - <<'PY'
+          from pathlib import Path
+
+          stub = """import 'dart:typed_data';
 
           class OcrService {
             static Future<void> init() async {}
@@ -133,7 +135,13 @@ jobs:
               return '';
             }
           }
-          EOF
+          """
+
+          for service_dir in ("services", "serivces"):
+              path = Path("wrapper/ohos_shell/lib") / service_dir / "ocr_service.dart"
+              path.parent.mkdir(parents=True, exist_ok=True)
+              path.write_text(stub, encoding="utf-8")
+          PY
 
           if grep -q '^dependency_overrides:' wrapper/ohos_shell/pubspec.yaml; then
             echo "wrapper/ohos_shell/pubspec.yaml already contains dependency_overrides; merge OHOS overrides manually first." >&2
