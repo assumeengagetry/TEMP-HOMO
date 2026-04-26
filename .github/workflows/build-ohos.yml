@@ -309,7 +309,9 @@ jobs:
 
       - name: Verify OpenHarmony toolchain
         working-directory: wrapper/ohos_shell/ohos
-        run: ./hvigorw -v
+        run: |
+          command -v hvigorw
+          hvigorw -v
 
       - name: Flutter doctor
         working-directory: wrapper/ohos_shell
