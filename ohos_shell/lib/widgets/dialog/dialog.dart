@@ -1,8 +1,8 @@
 ﻿import 'package:async/async.dart';
 import 'package:flutter/material.dart';
-import 'package:bugaoshan_ohos/injection/injector.dart';
-import 'package:bugaoshan_ohos/providers/app_config_provider.dart';
-import 'package:bugaoshan_ohos/widgets/route/router_utils.dart';
+import 'package:bugaoshan/injection/injector.dart';
+import 'package:bugaoshan/providers/app_config_provider.dart';
+import 'package:bugaoshan/widgets/route/router_utils.dart';
 
 final appConfigService = getIt<AppConfigProvider>();
 

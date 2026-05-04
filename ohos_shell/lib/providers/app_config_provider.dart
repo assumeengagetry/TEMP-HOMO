@@ -1,8 +1,8 @@
-﻿import 'dart:ui';
+import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart' show Colors;
-import 'package:bugaoshan_ohos/utils/locale_utils.dart';
+import 'package:flutter/material.dart' show Colors, Curve, Curves;
+import 'package:bugaoshan/utils/locale_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 //define key
@@ -13,6 +13,11 @@ const String _keyColorOpacity = 'colorOpacity';
 const String _keyCourseCardFontSize = 'courseCardFontSize';
 const String _keyShowCourseGrid = 'showCourseGrid';
 const String _keyCourseRowHeight = 'courseRowHeight';
+const String _keyBackgroundImageOpacity = 'backgroundImageOpacity';
+const String _keyBackgroundImagePath = 'backgroundImagePath';
+const String _keyFirstLaunchWizardCompleted = 'firstLaunchWizardCompleted';
+const String _keyHasUpdateNotification = 'hasUpdateNotification';
+const Curve appCurve = Curves.easeOutQuart;
 
 class AppConfigProvider {
   final SharedPreferences _sharedPreferences;
@@ -33,6 +38,17 @@ class AppConfigProvider {
   final ValueNotifier<double> courseCardFontSize = ValueNotifier<double>(13.0);
   final ValueNotifier<bool> showCourseGrid = ValueNotifier<bool>(true);
   final ValueNotifier<double> courseRowHeight = ValueNotifier<double>(72.0);
+  final ValueNotifier<double> backgroundImageOpacity = ValueNotifier<double>(
+    0.3,
+  );
+  final ValueNotifier<String?> backgroundImagePath = ValueNotifier<String?>(
+    null,
+  );
+  final ValueNotifier<int> backgroundImageVersion = ValueNotifier<int>(0);
+  final ValueNotifier<bool> firstLaunchWizardCompleted = ValueNotifier<bool>(
+    false,
+  );
+  final ValueNotifier<bool> hasUpdateNotification = ValueNotifier<bool>(false);
 
   void _loadLocale() {
     final localeString = _sharedPreferences.getString(_keyLocale);
@@ -51,6 +67,15 @@ class AppConfigProvider {
         _sharedPreferences.getBool(_keyShowCourseGrid) ?? true;
     courseRowHeight.value =
         _sharedPreferences.getDouble(_keyCourseRowHeight) ?? 72.0;
+    backgroundImageOpacity.value =
+        _sharedPreferences.getDouble(_keyBackgroundImageOpacity) ?? 0.3;
+    backgroundImagePath.value = _sharedPreferences.getString(
+      _keyBackgroundImagePath,
+    );
+    firstLaunchWizardCompleted.value =
+        _sharedPreferences.getBool(_keyFirstLaunchWizardCompleted) ?? false;
+    hasUpdateNotification.value =
+        _sharedPreferences.getBool(_keyHasUpdateNotification) ?? false;
   }
 
   void _addSaveCallback() {
@@ -84,6 +109,32 @@ class AppConfigProvider {
     });
     courseRowHeight.addListener(() {
       _sharedPreferences.setDouble(_keyCourseRowHeight, courseRowHeight.value);
+    });
+    backgroundImageOpacity.addListener(() {
+      _sharedPreferences.setDouble(
+        _keyBackgroundImageOpacity,
+        backgroundImageOpacity.value,
+      );
+    });
+    backgroundImagePath.addListener(() {
+      final path = backgroundImagePath.value;
+      if (path != null) {
+        _sharedPreferences.setString(_keyBackgroundImagePath, path);
+      } else {
+        _sharedPreferences.remove(_keyBackgroundImagePath);
+      }
+    });
+    firstLaunchWizardCompleted.addListener(() {
+      _sharedPreferences.setBool(
+        _keyFirstLaunchWizardCompleted,
+        firstLaunchWizardCompleted.value,
+      );
+    });
+    hasUpdateNotification.addListener(() {
+      _sharedPreferences.setBool(
+        _keyHasUpdateNotification,
+        hasUpdateNotification.value,
+      );
     });
   }
 

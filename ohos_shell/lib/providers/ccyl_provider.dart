@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:bugaoshan_ohos/serivces/ccyl_service.dart';
+import 'package:bugaoshan/services/ccyl_service.dart';
 
 const _keyCcylToken = 'ccyl_token';
 const _keyCcylUserId = 'ccyl_user_id';
@@ -31,7 +31,9 @@ class CcylProvider extends ChangeNotifier {
       await _prefs.setString(_keyCcylUserId, _service.currentUser!.id);
       debugPrint('Saved userId: ${_service.currentUser!.id}');
     }
-    debugPrint('loginWithOAuthCode: _service.currentUser=${_service.currentUser?.id}');
+    debugPrint(
+      'loginWithOAuthCode: _service.currentUser=${_service.currentUser?.id}',
+    );
     notifyListeners();
   }
 

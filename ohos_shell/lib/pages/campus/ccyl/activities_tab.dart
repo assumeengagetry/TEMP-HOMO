@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:bugaoshan_ohos/injection/injector.dart';
-import 'package:bugaoshan_ohos/l10n/app_localizations.dart';
-import 'package:bugaoshan_ohos/providers/ccyl_provider.dart';
-import 'package:bugaoshan_ohos/serivces/ccyl_service.dart';
-import 'package:bugaoshan_ohos/pages/campus/ccyl/activity_lib_detail_page.dart';
+import 'package:bugaoshan/injection/injector.dart';
+import 'package:bugaoshan/l10n/app_localizations.dart';
+import 'package:bugaoshan/providers/ccyl_provider.dart';
+import 'package:bugaoshan/services/ccyl_service.dart';
+import 'package:bugaoshan/pages/campus/ccyl/activity_lib_detail_page.dart';
 
 class ActivitiesTab extends StatefulWidget {
   const ActivitiesTab({super.key});
@@ -73,8 +73,11 @@ class _ActivitiesTabState extends State<ActivitiesTab> {
     } catch (e) {
       debugPrint('Activities load error: $e');
       if (mounted) {
+        final hour = DateTime.now().hour;
         setState(() {
-          _error = 'ccylActivityLoadFailed';
+          _error = (hour >= 0 && hour < 6)
+              ? 'campusNetworkRequiredAtNight'
+              : 'ccylActivityLoadFailed';
         });
       }
     } finally {
@@ -90,6 +93,8 @@ class _ActivitiesTabState extends State<ActivitiesTab> {
     switch (errorKey) {
       case 'ccylActivityLoadFailed':
         return l10n.ccylActivityLoadFailed;
+      case 'campusNetworkRequiredAtNight':
+        return l10n.campusNetworkRequiredAtNight;
       default:
         return l10n.loadFailed;
     }
@@ -129,19 +134,29 @@ class _ActivitiesTabState extends State<ActivitiesTab> {
         Expanded(
           child: _error != null
               ? Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        _getErrorMessage(l10n, _error!),
-                        style: TextStyle(color: Colors.red),
+                  child: GestureDetector(
+                    onTap: _loadActivities,
+                    child: SizedBox(
+                      width: 220,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.error_outline,
+                            size: 48,
+                            color: Theme.of(context).colorScheme.error,
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            _getErrorMessage(l10n, _error!),
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              color: Theme.of(context).colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 16),
-                      ElevatedButton(
-                        onPressed: _loadActivities,
-                        child: Text(l10n.loadFailed),
-                      ),
-                    ],
+                    ),
                   ),
                 )
               : _activities.isEmpty && !_loading

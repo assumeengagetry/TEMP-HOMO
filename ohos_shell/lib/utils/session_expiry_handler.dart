@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:bugaoshan_ohos/l10n/app_localizations.dart';
-import 'package:bugaoshan_ohos/pages/scu_login_page.dart';
-import 'package:bugaoshan_ohos/providers/scu_auth_provider.dart';
-import 'package:bugaoshan_ohos/widgets/route/router_utils.dart';
+import 'package:bugaoshan/l10n/app_localizations.dart';
+import 'package:bugaoshan/pages/auth/scu_login_page.dart';
+import 'package:bugaoshan/providers/scu_auth_provider.dart';
+import 'package:bugaoshan/widgets/route/router_utils.dart';
 
 /// 统一的 session 过期处理中间件
 ///
@@ -27,6 +27,8 @@ class SessionExpiryHandler {
 
     // 2. 执行 logout，清除本地 token
     await authProvider.logout();
+
+    if (!effectiveContext.mounted) return false;
 
     // 3. 弹出会话过期提示 Dialog
     final result = await showDialog<bool>(

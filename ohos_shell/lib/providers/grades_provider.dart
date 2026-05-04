@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:bugaoshan_ohos/models/scheme_score.dart';
-import 'package:bugaoshan_ohos/providers/scu_auth_provider.dart';
-import 'package:bugaoshan_ohos/serivces/scu_auth_service.dart';
-import 'package:bugaoshan_ohos/utils/session_expiry_handler.dart';
+import 'package:bugaoshan/models/scheme_score.dart';
+import 'package:bugaoshan/providers/scu_auth_provider.dart';
+import 'package:bugaoshan/services/scu_auth_service.dart';
+import 'package:bugaoshan/utils/session_expiry_handler.dart';
 
 const _keySchemeScores = 'grades_scheme_scores';
 const _keyPassingScores = 'grades_passing_scores';
@@ -59,14 +59,28 @@ class GradesProvider extends ChangeNotifier {
       if (e.sessionExpired) {
         await SessionExpiryHandler.handle(_authProvider);
       }
-      _schemeState = GradesLoadState.error;
-      _schemeError = 'sessionExpired';
+      if (_schemeScores != null) {
+        _schemeState = GradesLoadState.loaded;
+        _schemeError = 'sessionExpired';
+      } else {
+        _schemeState = GradesLoadState.error;
+        _schemeError = 'sessionExpired';
+      }
     } catch (e) {
       debugPrint('Scheme scores load error: $e');
-      _schemeState = GradesLoadState.error;
-      _schemeError = 'gradesLoadFailed';
+      if (_schemeScores != null) {
+        _schemeState = GradesLoadState.loaded;
+        _schemeError = 'gradesLoadFailed';
+      } else {
+        _schemeState = GradesLoadState.error;
+        _schemeError = 'gradesLoadFailed';
+      }
     }
     notifyListeners();
+  }
+
+  void clearSchemeError() {
+    _schemeError = null;
   }
 
   // --- 及格成绩 ---
@@ -92,13 +106,27 @@ class GradesProvider extends ChangeNotifier {
       if (e.sessionExpired) {
         await SessionExpiryHandler.handle(_authProvider);
       }
-      _passingState = GradesLoadState.error;
-      _passingError = 'sessionExpired';
+      if (_passingScores != null) {
+        _passingState = GradesLoadState.loaded;
+        _passingError = 'sessionExpired';
+      } else {
+        _passingState = GradesLoadState.error;
+        _passingError = 'sessionExpired';
+      }
     } catch (e) {
       debugPrint('Passing scores load error: $e');
-      _passingState = GradesLoadState.error;
-      _passingError = 'gradesLoadFailed';
+      if (_passingScores != null) {
+        _passingState = GradesLoadState.loaded;
+        _passingError = 'gradesLoadFailed';
+      } else {
+        _passingState = GradesLoadState.error;
+        _passingError = 'gradesLoadFailed';
+      }
     }
     notifyListeners();
+  }
+
+  void clearPassingError() {
+    _passingError = null;
   }
 }

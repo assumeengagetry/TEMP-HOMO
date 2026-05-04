@@ -15,6 +15,67 @@ class AppLocalizationsEn extends AppLocalizations {
   String get selfLanguage => 'English';
 
   @override
+  String get wizardWelcomeTitle => 'Welcome to Bugaoshan';
+
+  @override
+  String get wizardWelcomeDesc =>
+      'Your campus assistant: schedules, grades and campus services in one place';
+
+  @override
+  String get wizardLoginTitle => 'Login & Import Schedule';
+
+  @override
+  String get wizardLoginStep1 => 'Log in with SCU Unified Identity';
+
+  @override
+  String get wizardLoginStep2 => 'Import schedule from academic system';
+
+  @override
+  String get wizardLoginDone => 'Logged in';
+
+  @override
+  String get wizardLoginButton => 'Go to Login';
+
+  @override
+  String get wizardImportButton => 'Import Schedule';
+
+  @override
+  String get wizardImportHint => 'Auto-fetch schedule after login';
+
+  @override
+  String get wizardFeatureTitle => 'Explore More Features';
+
+  @override
+  String get wizardFeatureCourse => 'Course Schedule';
+
+  @override
+  String get wizardFeatureCourseDesc =>
+      'View weekly classes, manage multiple schedules, import from academic system, share and export as calendar files';
+
+  @override
+  String get wizardFeatureCampus => 'Campus Services';
+
+  @override
+  String get wizardFeatureCampusDesc =>
+      'Check classroom availability and grades, join CCYL activities, query utility balance, manage network devices';
+
+  @override
+  String get wizardFeatureProfile => 'Profile';
+
+  @override
+  String get wizardFeatureProfileDesc =>
+      'Log in with SCU Unified Identity, bind CCYL account, customize theme colors, dark mode and language preferences';
+
+  @override
+  String get onboardingSkip => 'Skip';
+
+  @override
+  String get onboardingNext => 'Next';
+
+  @override
+  String get onboardingStart => 'Get Started';
+
+  @override
   String get course => 'Course';
 
   @override
@@ -64,17 +125,46 @@ class AppLocalizationsEn extends AppLocalizations {
   String get borrowed => 'Borrowed';
 
   @override
+  String get classroomPeriodExam => 'Exam';
+
+  @override
+  String get classroomPeriodExperiment => 'Experiment';
+
+  @override
+  String classroomTeachingWeek(int week) {
+    return 'Week $week';
+  }
+
+  @override
+  String classroomQueryDate(String date) {
+    return 'Query Date: $date';
+  }
+
+  @override
+  String get classroomCanBorrow => 'Borrowable';
+
+  @override
+  String get classroomCannotBorrow => 'Not Borrowable';
+
+  @override
+  String get classroomRemark => 'Remark';
+
+  @override
   String get period => 'Period';
 
   @override
   String get loading => 'Loading...';
 
   @override
-  String get loadFailed => 'Load failed, tap to retry';
+  String get loadFailed => 'Load Failed';
 
   @override
   String get campusNetworkRequired =>
       'This feature is only available on campus network. Please connect to campus Wi-Fi or use the school VPN.';
+
+  @override
+  String get campusNetworkRequiredAtNight =>
+      'Access is restricted to campus network during 0:00-6:00. Please connect to campus Wi-Fi or use the school VPN.';
 
   @override
   String get appOnly => 'Available on App only';
@@ -96,6 +186,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get confirm => 'Confirm';
+
+  @override
+  String get today => 'Today';
 
   @override
   String currentAnimationDuration(Object value) {
@@ -143,7 +236,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get about => 'About';
 
   @override
-  String get developmentTeam => 'Developer Team';
+  String get developmentTeam => 'Dev Team';
 
   @override
   String get projectInfo => 'Project Info';
@@ -155,7 +248,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get version => 'Version';
 
   @override
-  String get description => 'Description';
+  String get gitTag => 'Git Tag';
 
   @override
   String get appDescription => 'Explore everything, all on the Bugaoshan';
@@ -172,10 +265,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get externalResources => 'External Resources';
 
   @override
-  String get projectRepository => 'Project Repository';
+  String get projectRepository => 'Repository';
 
   @override
-  String get checkForUpdates => 'Check for Updates';
+  String get checkForUpdates => 'Check Updates';
 
   @override
   String get newVersionAvailable => 'New Version Available';
@@ -185,6 +278,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get goToReleases => 'Go to Releases';
+
+  @override
+  String get startUpdate => 'Start Update';
+
+  @override
+  String get startUpdatePreview => 'Update to Preview';
+
+  @override
+  String get updateToLatest => 'Update to Latest';
+
+  @override
+  String get updateToStable => 'Update to Latest Stable';
+
+  @override
+  String get updateToPreview => 'Update to Latest (Include Preview)';
+
+  @override
+  String get downloading => 'Downloading';
+
+  @override
+  String get updateFailed => 'Update failed';
+
+  @override
+  String get preReleaseWarning =>
+      'This is a pre-release version. Use with caution.';
+
+  @override
+  String get releaseNotes => 'Release Notes';
 
   @override
   String get neverMind => 'Never Mind';
@@ -197,6 +318,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get environmentInfo => 'Environment Info';
+
+  @override
+  String get testPage => 'Test Page';
+
+  @override
+  String get forceUpdate => 'Update to Latest (Include Preview)';
 
   @override
   String get scheduleSetting => 'Schedule Setting';
@@ -321,10 +448,43 @@ class AppLocalizationsEn extends AppLocalizations {
   String get semesterStartDate => 'Semester Start Date';
 
   @override
+  String get setCurrentWeek => 'Set Current Week';
+
+  @override
+  String get setCurrentWeekHint =>
+      'Automatically calculates the semester start date based on the current week';
+
+  @override
+  String get autoFetchCurrentWeek => 'Auto Fetch Current Week';
+
+  @override
+  String get autoFetchCurrentWeekHint =>
+      'Fetch current teaching week from academic system';
+
+  @override
+  String get fetchingCurrentWeek => 'Fetching...';
+
+  @override
+  String get loginRequired =>
+      'Please complete SCU Unified Identity login in the Profile page first';
+
+  @override
+  String get goToLogin => 'Go to Login';
+
+  @override
   String get semesterEndDate => 'Semester End Date';
 
   @override
   String get displaySetting => 'Display Setting';
+
+  @override
+  String get courseCardSection => 'Course Card';
+
+  @override
+  String get courseGridSection => 'Course Grid';
+
+  @override
+  String get otherSection => 'Other';
 
   @override
   String get colorOpacity => 'Color Opacity';
@@ -339,6 +499,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get courseRowHeight => 'Course Row Height';
 
   @override
+  String get backgroundImage => 'Background Image';
+
+  @override
+  String get setBackgroundImage => 'Set Background Image';
+
+  @override
+  String get removeBackgroundImage => 'Remove Background Image';
+
+  @override
+  String get backgroundImageOpacity => 'Background Image Opacity';
+
+  @override
   String get showTeacher => 'Show Teacher';
 
   @override
@@ -348,10 +520,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get showWeekend => 'Show Weekend';
 
   @override
+  String get showNonCurrentWeekCourses => 'Show Non-Current Week Courses';
+
+  @override
   String get save => 'Save';
 
   @override
   String get cancel => 'Cancel';
+
+  @override
+  String get back => 'Back';
+
+  @override
+  String get next => 'Next';
 
   @override
   String get delete => 'Delete';
@@ -378,9 +559,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get duplicateScheduleName => 'Schedule name already exists';
-
-  @override
-  String get exportSuccess => 'Schedule data copied to clipboard';
 
   @override
   String get importSchedule => 'Import Schedule';
@@ -423,10 +601,47 @@ class AppLocalizationsEn extends AppLocalizations {
   String get exportSchedule => 'Export Schedule';
 
   @override
+  String get exportScheduleAsCopy => 'Copy to Clipboard';
+
+  @override
+  String get exportScheduleAsIcs => 'Export to Calendar File';
+
+  @override
+  String get exportScheduleAsCopySuccess => 'Schedule data copied to clipboard';
+
+  @override
+  String get exportScheduleAsCopyFailed =>
+      'Copy failed, maybe you can try later';
+
+  @override
+  String get exportScheduleAsIcsTo => 'Save Calendar File to...';
+
+  @override
+  String get exportScheduleAsIcsSuccess => 'File saved successfully';
+
+  @override
+  String get exportScheduleAsIcsFailed => 'File save failed';
+
+  @override
+  String get exportScheduleAsIcsCanceled => 'File save canceled';
+
+  @override
+  String get icsTeacherLabel => 'Teacher(s)';
+
+  @override
+  String get exportScheduleAddToCalendar => 'Import to Calendar';
+
+  @override
+  String get exportScheduleAddToCalendarSuccess => 'Imported to calendar';
+
+  @override
+  String get exportScheduleAddToCalendarFailed => 'Import failed';
+
+  @override
   String get copySuffix => ' (Copy)';
 
   @override
-  String get notThisWeek => '[Not this week]';
+  String get notThisWeek => '[Not]';
 
   @override
   String actualCurrentWeek(Object week) {
@@ -508,6 +723,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get importAll => 'Import All';
 
   @override
+  String importingProgress(int current, int total) {
+    return 'Importing $current/$total...';
+  }
+
+  @override
   String get scuUnifiedAuth => 'Unified Identity Authentication';
 
   @override
@@ -530,6 +750,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get rememberPassword => 'Remember Password';
+
+  @override
+  String get autoLogin => 'Auto Login';
+
+  @override
+  String get autoLoggingIn => 'Logging in...';
 
   @override
   String get loginButton => 'Login';
@@ -567,6 +793,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get gradesLoadFailed => 'Failed to load grades';
+
+  @override
+  String get gradesRefreshFailed => 'Refresh failed, showing cached data';
 
   @override
   String get gradesNoPassingData => 'No passing grade data';
@@ -750,6 +979,35 @@ class AppLocalizationsEn extends AppLocalizations {
       'Please complete SCU Unified Identity login in the Profile page first';
 
   @override
+  String get planCompletion => 'Plan Completion';
+
+  @override
+  String get planCompletionDesc =>
+      'View progress of each training program module';
+
+  @override
+  String get planCompletionNoData => 'No plan completion data';
+
+  @override
+  String get planCompletionTotalEarned => 'Earned Credits';
+
+  @override
+  String get planCompletionCompleted => 'Completed';
+
+  @override
+  String get planCompletionCredits => 'Credits';
+
+  @override
+  String get planCompletionCreditsUnit => 'cr';
+
+  @override
+  String get planCompletionCourses => 'Courses';
+
+  @override
+  String get planCompletionRateLimited =>
+      'Too many requests, please try again later';
+
+  @override
   String get ccylTitle => 'Second Classroom';
 
   @override
@@ -762,7 +1020,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ccylMyActivities => 'My Activities';
 
   @override
-  String get ccylOrderedActivities => 'Reserved Activities';
+  String get ccylOrderedActivities => 'Reserved';
+
+  @override
+  String get ccylMyCredits => 'Credit List';
+
+  @override
+  String get ccylSelect => 'Select';
+
+  @override
+  String get ccylSelectAll => 'Select All';
+
+  @override
+  String get ccylExportEmail => 'Export to Email';
+
+  @override
+  String get ccylEmailAddress => 'QQ Email';
+
+  @override
+  String get ccylEmailHint => 'Enter QQ email to receive the report';
+
+  @override
+  String get ccylExportSuccess => 'Report sent to email';
 
   @override
   String get ccylSearchHint => 'Search activity name';
@@ -876,9 +1155,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ccylLiableTeacher => 'Liable Teacher';
 
   @override
-  String get ccylLiableTeacherPhone => 'Liable Teacher Phone';
-
-  @override
   String get ccylActivities => 'Activities';
 
   @override
@@ -963,6 +1239,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get networkDeviceOperationSuccess => 'Operation successful';
 
   @override
+  String get loginFailed => 'Login failed';
+
+  @override
+  String get invalidCaptcha => 'Invalid captcha, please try again';
+
+  @override
+  String loginFailedWillLock(int count) {
+    return 'Login failed, $count more attempt(s) will lock your account';
+  }
+
+  @override
   String get ccylBindFailed => 'Binding failed, please try again later';
 
   @override
@@ -970,4 +1257,118 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get networkOfflineFailed => 'Failed to offline device';
+
+  @override
+  String get balanceQuery => 'Balance Query';
+
+  @override
+  String get balanceQueryDesc => 'Query electricity and AC fee balance';
+
+  @override
+  String get electricityFee => 'Electricity';
+
+  @override
+  String get acFee => 'AC Fee';
+
+  @override
+  String get balance => 'Balance';
+
+  @override
+  String get bindRoom => 'Bind Room';
+
+  @override
+  String get bindNewRoom => 'Bind New Room';
+
+  @override
+  String get switchRoom => 'Switch Room';
+
+  @override
+  String get deleteRoom => 'Delete Room';
+
+  @override
+  String get selectUnit => 'Select Unit';
+
+  @override
+  String get inputInfo => 'Input Info';
+
+  @override
+  String get stepCampus => 'Cmp';
+
+  @override
+  String get stepBuilding => 'Bld';
+
+  @override
+  String get stepUnit => 'Unit';
+
+  @override
+  String get stepInfo => 'Info';
+
+  @override
+  String get inputBindingInfo => 'Input Binding Info';
+
+  @override
+  String get cusName => 'Name';
+
+  @override
+  String get cusNameHint => 'Enter name';
+
+  @override
+  String get roomNumber => 'Room Number';
+
+  @override
+  String get roomNumberHint => 'Enter room number, e.g. 301C';
+
+  @override
+  String get pricePerUnit => 'Price per unit';
+
+  @override
+  String get balanceQueryLoginRequired =>
+      'Please complete SCU Unified Identity login in the Profile page first';
+
+  @override
+  String get balanceQueryNoBinding =>
+      'You haven\'t bound any room yet, please bind first';
+
+  @override
+  String get scuLoginDisclaimerPwd =>
+      'When \'Remember Password\' is enabled, your password is encrypted and stored locally using system-level encryption';
+
+  @override
+  String get scuLoginDisclaimerOcr =>
+      'Captcha is recognized by a local OCR model';
+
+  @override
+  String get scuLoginDisclaimerPrivacy =>
+      'We do not collect any personal information';
+
+  @override
+  String get openSourceLicenseDesc => 'This app is open-sourced under AGPL-3.0';
+
+  @override
+  String get academicCalendar => 'Academic Calendar';
+
+  @override
+  String get academicCalendarDesc =>
+      'View SCU academic calendar and semester schedule';
+
+  @override
+  String get selectAcademicYear => 'Select Academic Year';
+
+  @override
+  String get userInfoLoading => 'Loading user info...';
+
+  @override
+  String get userInfoLoadFailed => 'Failed to load user info';
+
+  @override
+  String get userInfoRetry => 'Tap to retry';
+
+  @override
+  String get labelBookBorrowCount => 'Books Borrowed';
+
+  @override
+  String get labelCampusCardBalance => 'Card Balance';
+
+  @override
+  String get labelNetworkFeeBalance => 'Network Fee';
 }

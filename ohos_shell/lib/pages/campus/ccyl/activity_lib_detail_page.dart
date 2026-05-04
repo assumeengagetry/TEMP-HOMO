@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:bugaoshan_ohos/injection/injector.dart';
-import 'package:bugaoshan_ohos/l10n/app_localizations.dart';
-import 'package:bugaoshan_ohos/providers/ccyl_provider.dart';
-import 'package:bugaoshan_ohos/serivces/ccyl_service.dart';
-import 'package:bugaoshan_ohos/pages/campus/ccyl/activity_detail_page.dart';
+import 'package:bugaoshan/injection/injector.dart';
+import 'package:bugaoshan/l10n/app_localizations.dart';
+import 'package:bugaoshan/providers/ccyl_provider.dart';
+import 'package:bugaoshan/services/ccyl_service.dart';
+import 'package:bugaoshan/pages/campus/ccyl/activity_detail_page.dart';
 
 class ActivityLibDetailPage extends StatefulWidget {
   final String activityLibraryId;
@@ -360,7 +360,7 @@ class _ActivityLibDetailPageState extends State<ActivityLibDetailPage> {
               ),
               _buildInfoRow(
                 Icons.phone_outlined,
-                l10n.ccylLiableTeacherPhone,
+                l10n.ccylLiablePhone,
                 lib.liableTerPhone,
               ),
             ],

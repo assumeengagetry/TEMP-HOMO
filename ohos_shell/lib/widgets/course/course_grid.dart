@@ -1,14 +1,26 @@
-import 'package:flutter/material.dart';
-import 'package:bugaoshan_ohos/injection/injector.dart';
-import 'package:bugaoshan_ohos/l10n/app_localizations.dart';
-import 'package:bugaoshan_ohos/models/course.dart';
-import 'package:bugaoshan_ohos/providers/app_config_provider.dart';
-import 'package:bugaoshan_ohos/widgets/course/course_card.dart';
+import 'dart:io';
 
-List<Course> selectVisibleCoursesForDay(List<Course> courses, int displayWeek) {
+import 'package:flutter/material.dart';
+import 'package:bugaoshan/injection/injector.dart';
+import 'package:bugaoshan/l10n/app_localizations.dart';
+import 'package:bugaoshan/models/course.dart';
+import 'package:bugaoshan/providers/app_config_provider.dart';
+import 'package:bugaoshan/widgets/course/course_card.dart';
+
+List<Course> selectVisibleCoursesForDay(
+  List<Course> courses,
+  int displayWeek, {
+  bool showNonCurrentWeekCourses = true,
+}) {
   final visibleCourses =
       courses.where((course) => course.isInWeekRange(displayWeek)).toList()
         ..sort(_compareCoursesForLayout);
+
+  if (!showNonCurrentWeekCourses) {
+    return visibleCourses
+        .where((course) => course.isActiveInWeek(displayWeek))
+        .toList();
+  }
 
   final futureCourses =
       courses.where((course) => displayWeek < course.startWeek).toList()
@@ -86,11 +98,17 @@ class _CourseGridState extends State<CourseGrid> {
         _selectedEmptyDay = null;
         _selectedEmptySection = null;
       });
-    } else {
-      // First tap: select the cell
+    } else if (_selectedEmptyDay == null && _selectedEmptySection == null) {
+      // First tap: select the cell (nothing was selected before)
       setState(() {
         _selectedEmptyDay = day;
         _selectedEmptySection = section;
+      });
+    } else {
+      // Tap different cell while something was selected: dismiss
+      setState(() {
+        _selectedEmptyDay = null;
+        _selectedEmptySection = null;
       });
     }
   }
@@ -99,13 +117,13 @@ class _CourseGridState extends State<CourseGrid> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final dayNames = [
+      l10n.sunday,
       l10n.monday,
       l10n.tuesday,
       l10n.wednesday,
       l10n.thursday,
       l10n.friday,
       l10n.saturday,
-      l10n.sunday,
     ];
     final sections = widget.config.sectionsPerDay;
     final timeSlots = widget.config.timeSlots;
@@ -115,44 +133,63 @@ class _CourseGridState extends State<CourseGrid> {
       listenable: Listenable.merge([
         appConfig.showCourseGrid,
         appConfig.courseRowHeight,
+        appConfig.backgroundImagePath,
+        appConfig.backgroundImageOpacity,
       ]),
       builder: (context, _) {
-        return Column(
+        return Stack(
           children: [
-            // Header row: empty corner + day names
-            _buildHeaderRow(context, dayNames),
-            // Grid body
-            Expanded(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Section number + time column (fixed width)
-                    _buildSectionColumn(sections, timeSlots, context),
-                    // 7 or 5 day columns
-                    Expanded(
-                      child: Row(
-                        children: List.generate(dayCount, (dayIndex) {
-                          final day = dayIndex + 1; // 1=Mon ... 7=Sun
-                          final dayCourses = selectVisibleCoursesForDay(
-                            widget.courses
-                                .where((c) => c.dayOfWeek == day)
-                                .toList(),
-                            widget.displayWeek,
-                          );
-                          return _buildDayColumn(
-                            context,
-                            day,
-                            sections,
-                            dayCourses,
-                          );
-                        }),
-                      ),
-                    ),
-                  ],
+            // Background image layer
+            if (appConfig.backgroundImagePath.value != null)
+              Positioned.fill(
+                child: Opacity(
+                  opacity: appConfig.backgroundImageOpacity.value,
+                  child: Image(
+                    image: FileImage(File(appConfig.backgroundImagePath.value!)),
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, _, _) => const SizedBox.shrink(),
+                  ),
                 ),
               ),
+            // Course grid content
+            Column(
+              children: [
+                _buildHeaderRow(context, dayNames),
+                Expanded(
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildSectionColumn(sections, timeSlots, context),
+                        Expanded(
+                          child: Row(
+                            children: List.generate(dayCount, (dayIndex) {
+                              final day = widget.config.showWeekend
+                                  ? (dayIndex == 0 ? 7 : dayIndex)
+                                  : dayIndex + 1;
+                              final dayCourses = selectVisibleCoursesForDay(
+                                widget.courses
+                                    .where((c) => c.dayOfWeek == day)
+                                    .toList(),
+                                widget.displayWeek,
+                                showNonCurrentWeekCourses:
+                                    widget.config.showNonCurrentWeekCourses,
+                              );
+                              return _buildDayColumn(
+                                context,
+                                day,
+                                sections,
+                                dayCourses,
+                              );
+                            }),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         );
@@ -164,16 +201,19 @@ class _CourseGridState extends State<CourseGrid> {
     final theme = Theme.of(context);
     final visibleDays = widget.config.showWeekend
         ? dayNames
-        : dayNames.sublist(0, 5);
+        : dayNames.sublist(1, 6);
 
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     final semesterStart = widget.config.semesterStartDate;
 
+    final hasBackground = appConfig.backgroundImagePath.value != null;
     return Container(
       height: 40,
       decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceContainerHighest,
+        color: hasBackground
+            ? null
+            : theme.colorScheme.surfaceContainerHighest,
         border: Border(
           bottom: BorderSide(color: theme.colorScheme.outlineVariant),
         ),
@@ -193,8 +233,17 @@ class _CourseGridState extends State<CourseGrid> {
             child: Row(
               children: List.generate(visibleDays.length, (index) {
                 final name = visibleDays[index];
+                // 周日为index 0，计算当前列对应的星期几
+                final dayOfWeek = widget.config.showWeekend
+                    ? (index == 0 ? 7 : index)
+                    : index + 1;
+                // 周日在周一之前，dayOfWeek=7时应为-1而非6
+                final daysFromMonday = dayOfWeek == 7 ? -1 : dayOfWeek - 1;
+                final mondayOffset = (1 - semesterStart.weekday) % 7;
                 final date = semesterStart.add(
-                  Duration(days: (widget.displayWeek - 1) * 7 + index),
+                  Duration(
+                    days: (widget.displayWeek - 1) * 7 + mondayOffset + daysFromMonday,
+                  ),
                 );
                 final isToday = date.isAtSameMomentAs(today);
 
@@ -274,6 +323,9 @@ class _CourseGridState extends State<CourseGrid> {
           final startStr = slot != null
               ? '${slot.startTime.hour.toString().padLeft(2, '0')}:${slot.startTime.minute.toString().padLeft(2, '0')}'
               : '';
+          final endStr = slot != null
+              ? '${slot.endTime.hour.toString().padLeft(2, '0')}:${slot.endTime.minute.toString().padLeft(2, '0')}'
+              : '';
 
           final isBoundary = (i + 1 == morningEnd) || (i + 1 == afternoonEnd);
 
@@ -301,7 +353,7 @@ class _CourseGridState extends State<CourseGrid> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  if (startStr.isNotEmpty)
+                  if (startStr.isNotEmpty) ...[
                     Padding(
                       padding: const EdgeInsets.only(top: 2),
                       child: Text(
@@ -312,6 +364,16 @@ class _CourseGridState extends State<CourseGrid> {
                         ),
                       ),
                     ),
+                    if (endStr.isNotEmpty &&
+                        appConfig.courseRowHeight.value >= 60)
+                      Text(
+                        endStr,
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                  ],
                 ],
               ),
             ),

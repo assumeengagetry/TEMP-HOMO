@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:bugaoshan_ohos/l10n/app_localizations.dart';
-import 'package:bugaoshan_ohos/models/course.dart';
-import 'package:bugaoshan_ohos/pages/course_edit_page.dart';
-import 'package:bugaoshan_ohos/providers/course_provider.dart';
-import 'package:bugaoshan_ohos/widgets/dialog/dialog.dart';
-import 'package:bugaoshan_ohos/widgets/route/router_utils.dart';
+import 'package:bugaoshan/l10n/app_localizations.dart';
+import 'package:bugaoshan/models/course.dart';
+import 'package:bugaoshan/pages/course/course_edit_page.dart';
+import 'package:bugaoshan/providers/course_provider.dart';
+import 'package:bugaoshan/widgets/dialog/dialog.dart';
+import 'package:bugaoshan/widgets/route/router_utils.dart';
 
 class CourseDetailSheet extends StatelessWidget {
   final Course course;
@@ -58,9 +58,13 @@ class CourseDetailSheet extends StatelessWidget {
                     ),
                   ),
                   IconButton(
+                    iconSize: 22,
                     icon: Icon(
                       Icons.delete_outline,
                       color: Theme.of(context).colorScheme.error,
+                    ),
+                    style: IconButton.styleFrom(
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
                     onPressed: () async {
                       final confirm = await showYesNoDialog(
@@ -75,15 +79,18 @@ class CourseDetailSheet extends StatelessWidget {
                       }
                     },
                   ),
-                  // Duplicate
                   IconButton(
+                    iconSize: 22,
                     icon: Icon(
                       Icons.copy,
                       color: Theme.of(context).colorScheme.primary,
                     ),
+                    style: IconButton.styleFrom(
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
                     onPressed: () {
                       Navigator.pop(context);
-                      final newCourse = course.copyWith(); // Create a new copy
+                      final newCourse = course.copyWith();
                       newCourse.name = '${course.name}${l10n.copySuffix}';
                       popupOrNavigate(
                         context,
@@ -91,11 +98,14 @@ class CourseDetailSheet extends StatelessWidget {
                       );
                     },
                   ),
-                  // Edit
                   IconButton(
+                    iconSize: 22,
                     icon: Icon(
                       Icons.edit_outlined,
                       color: Theme.of(context).colorScheme.primary,
+                    ),
+                    style: IconButton.styleFrom(
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
                     onPressed: () {
                       Navigator.pop(context);
@@ -114,7 +124,13 @@ class CourseDetailSheet extends StatelessWidget {
                   _InfoItem(
                     icon: Icons.calendar_today_outlined,
                     iconColor: Colors.teal,
-                    text: l10n.weekRange(course.startWeek, course.endWeek),
+                    text:
+                        '${l10n.weekRange(course.startWeek, course.endWeek)}'
+                        '${course.weekType == WeekType.odd
+                            ? ' ${l10n.oddWeek}'
+                            : course.weekType == WeekType.even
+                                ? ' ${l10n.evenWeek}'
+                                : ''}',
                   ),
                   _InfoItem(
                     icon: Icons.access_time_outlined,

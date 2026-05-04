@@ -115,6 +115,120 @@ abstract class AppLocalizations {
   /// **'English'**
   String get selfLanguage;
 
+  /// No description provided for @wizardWelcomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Bugaoshan'**
+  String get wizardWelcomeTitle;
+
+  /// No description provided for @wizardWelcomeDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Your campus assistant: schedules, grades and campus services in one place'**
+  String get wizardWelcomeDesc;
+
+  /// No description provided for @wizardLoginTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Login & Import Schedule'**
+  String get wizardLoginTitle;
+
+  /// No description provided for @wizardLoginStep1.
+  ///
+  /// In en, this message translates to:
+  /// **'Log in with SCU Unified Identity'**
+  String get wizardLoginStep1;
+
+  /// No description provided for @wizardLoginStep2.
+  ///
+  /// In en, this message translates to:
+  /// **'Import schedule from academic system'**
+  String get wizardLoginStep2;
+
+  /// No description provided for @wizardLoginDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Logged in'**
+  String get wizardLoginDone;
+
+  /// No description provided for @wizardLoginButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Login'**
+  String get wizardLoginButton;
+
+  /// No description provided for @wizardImportButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Import Schedule'**
+  String get wizardImportButton;
+
+  /// No description provided for @wizardImportHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-fetch schedule after login'**
+  String get wizardImportHint;
+
+  /// No description provided for @wizardFeatureTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore More Features'**
+  String get wizardFeatureTitle;
+
+  /// No description provided for @wizardFeatureCourse.
+  ///
+  /// In en, this message translates to:
+  /// **'Course Schedule'**
+  String get wizardFeatureCourse;
+
+  /// No description provided for @wizardFeatureCourseDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'View weekly classes, manage multiple schedules, import from academic system, share and export as calendar files'**
+  String get wizardFeatureCourseDesc;
+
+  /// No description provided for @wizardFeatureCampus.
+  ///
+  /// In en, this message translates to:
+  /// **'Campus Services'**
+  String get wizardFeatureCampus;
+
+  /// No description provided for @wizardFeatureCampusDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Check classroom availability and grades, join CCYL activities, query utility balance, manage network devices'**
+  String get wizardFeatureCampusDesc;
+
+  /// No description provided for @wizardFeatureProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get wizardFeatureProfile;
+
+  /// No description provided for @wizardFeatureProfileDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Log in with SCU Unified Identity, bind CCYL account, customize theme colors, dark mode and language preferences'**
+  String get wizardFeatureProfileDesc;
+
+  /// No description provided for @onboardingSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get onboardingSkip;
+
+  /// No description provided for @onboardingNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get onboardingNext;
+
+  /// No description provided for @onboardingStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Started'**
+  String get onboardingStart;
+
   /// No description provided for @course.
   ///
   /// In en, this message translates to:
@@ -211,6 +325,48 @@ abstract class AppLocalizations {
   /// **'Borrowed'**
   String get borrowed;
 
+  /// No description provided for @classroomPeriodExam.
+  ///
+  /// In en, this message translates to:
+  /// **'Exam'**
+  String get classroomPeriodExam;
+
+  /// No description provided for @classroomPeriodExperiment.
+  ///
+  /// In en, this message translates to:
+  /// **'Experiment'**
+  String get classroomPeriodExperiment;
+
+  /// No description provided for @classroomTeachingWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Week {week}'**
+  String classroomTeachingWeek(int week);
+
+  /// No description provided for @classroomQueryDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Query Date: {date}'**
+  String classroomQueryDate(String date);
+
+  /// No description provided for @classroomCanBorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Borrowable'**
+  String get classroomCanBorrow;
+
+  /// No description provided for @classroomCannotBorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Not Borrowable'**
+  String get classroomCannotBorrow;
+
+  /// No description provided for @classroomRemark.
+  ///
+  /// In en, this message translates to:
+  /// **'Remark'**
+  String get classroomRemark;
+
   /// No description provided for @period.
   ///
   /// In en, this message translates to:
@@ -226,7 +382,7 @@ abstract class AppLocalizations {
   /// No description provided for @loadFailed.
   ///
   /// In en, this message translates to:
-  /// **'Load failed, tap to retry'**
+  /// **'Load Failed'**
   String get loadFailed;
 
   /// No description provided for @campusNetworkRequired.
@@ -234,6 +390,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This feature is only available on campus network. Please connect to campus Wi-Fi or use the school VPN.'**
   String get campusNetworkRequired;
+
+  /// No description provided for @campusNetworkRequiredAtNight.
+  ///
+  /// In en, this message translates to:
+  /// **'Access is restricted to campus network during 0:00-6:00. Please connect to campus Wi-Fi or use the school VPN.'**
+  String get campusNetworkRequiredAtNight;
 
   /// No description provided for @appOnly.
   ///
@@ -276,6 +438,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Confirm'**
   String get confirm;
+
+  /// No description provided for @today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get today;
 
   /// No description provided for @currentAnimationDuration.
   ///
@@ -358,7 +526,7 @@ abstract class AppLocalizations {
   /// No description provided for @developmentTeam.
   ///
   /// In en, this message translates to:
-  /// **'Developer Team'**
+  /// **'Dev Team'**
   String get developmentTeam;
 
   /// No description provided for @projectInfo.
@@ -379,11 +547,11 @@ abstract class AppLocalizations {
   /// **'Version'**
   String get version;
 
-  /// No description provided for @description.
+  /// No description provided for @gitTag.
   ///
   /// In en, this message translates to:
-  /// **'Description'**
-  String get description;
+  /// **'Git Tag'**
+  String get gitTag;
 
   /// No description provided for @appDescription.
   ///
@@ -412,13 +580,13 @@ abstract class AppLocalizations {
   /// No description provided for @projectRepository.
   ///
   /// In en, this message translates to:
-  /// **'Project Repository'**
+  /// **'Repository'**
   String get projectRepository;
 
   /// No description provided for @checkForUpdates.
   ///
   /// In en, this message translates to:
-  /// **'Check for Updates'**
+  /// **'Check Updates'**
   String get checkForUpdates;
 
   /// No description provided for @newVersionAvailable.
@@ -438,6 +606,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Go to Releases'**
   String get goToReleases;
+
+  /// No description provided for @startUpdate.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Update'**
+  String get startUpdate;
+
+  /// No description provided for @startUpdatePreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Update to Preview'**
+  String get startUpdatePreview;
+
+  /// No description provided for @updateToLatest.
+  ///
+  /// In en, this message translates to:
+  /// **'Update to Latest'**
+  String get updateToLatest;
+
+  /// No description provided for @updateToStable.
+  ///
+  /// In en, this message translates to:
+  /// **'Update to Latest Stable'**
+  String get updateToStable;
+
+  /// No description provided for @updateToPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Update to Latest (Include Preview)'**
+  String get updateToPreview;
+
+  /// No description provided for @downloading.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloading'**
+  String get downloading;
+
+  /// No description provided for @updateFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Update failed'**
+  String get updateFailed;
+
+  /// No description provided for @preReleaseWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'This is a pre-release version. Use with caution.'**
+  String get preReleaseWarning;
+
+  /// No description provided for @releaseNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Release Notes'**
+  String get releaseNotes;
 
   /// No description provided for @neverMind.
   ///
@@ -462,6 +684,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Environment Info'**
   String get environmentInfo;
+
+  /// No description provided for @testPage.
+  ///
+  /// In en, this message translates to:
+  /// **'Test Page'**
+  String get testPage;
+
+  /// No description provided for @forceUpdate.
+  ///
+  /// In en, this message translates to:
+  /// **'Update to Latest (Include Preview)'**
+  String get forceUpdate;
 
   /// No description provided for @scheduleSetting.
   ///
@@ -697,6 +931,48 @@ abstract class AppLocalizations {
   /// **'Semester Start Date'**
   String get semesterStartDate;
 
+  /// No description provided for @setCurrentWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Set Current Week'**
+  String get setCurrentWeek;
+
+  /// No description provided for @setCurrentWeekHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatically calculates the semester start date based on the current week'**
+  String get setCurrentWeekHint;
+
+  /// No description provided for @autoFetchCurrentWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto Fetch Current Week'**
+  String get autoFetchCurrentWeek;
+
+  /// No description provided for @autoFetchCurrentWeekHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Fetch current teaching week from academic system'**
+  String get autoFetchCurrentWeekHint;
+
+  /// No description provided for @fetchingCurrentWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Fetching...'**
+  String get fetchingCurrentWeek;
+
+  /// No description provided for @loginRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Please complete SCU Unified Identity login in the Profile page first'**
+  String get loginRequired;
+
+  /// No description provided for @goToLogin.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Login'**
+  String get goToLogin;
+
   /// No description provided for @semesterEndDate.
   ///
   /// In en, this message translates to:
@@ -708,6 +984,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Display Setting'**
   String get displaySetting;
+
+  /// No description provided for @courseCardSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Course Card'**
+  String get courseCardSection;
+
+  /// No description provided for @courseGridSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Course Grid'**
+  String get courseGridSection;
+
+  /// No description provided for @otherSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get otherSection;
 
   /// No description provided for @colorOpacity.
   ///
@@ -733,6 +1027,30 @@ abstract class AppLocalizations {
   /// **'Course Row Height'**
   String get courseRowHeight;
 
+  /// No description provided for @backgroundImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Background Image'**
+  String get backgroundImage;
+
+  /// No description provided for @setBackgroundImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Set Background Image'**
+  String get setBackgroundImage;
+
+  /// No description provided for @removeBackgroundImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Background Image'**
+  String get removeBackgroundImage;
+
+  /// No description provided for @backgroundImageOpacity.
+  ///
+  /// In en, this message translates to:
+  /// **'Background Image Opacity'**
+  String get backgroundImageOpacity;
+
   /// No description provided for @showTeacher.
   ///
   /// In en, this message translates to:
@@ -751,6 +1069,12 @@ abstract class AppLocalizations {
   /// **'Show Weekend'**
   String get showWeekend;
 
+  /// No description provided for @showNonCurrentWeekCourses.
+  ///
+  /// In en, this message translates to:
+  /// **'Show Non-Current Week Courses'**
+  String get showNonCurrentWeekCourses;
+
   /// No description provided for @save.
   ///
   /// In en, this message translates to:
@@ -762,6 +1086,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cancel'**
   String get cancel;
+
+  /// No description provided for @back.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get back;
+
+  /// No description provided for @next.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get next;
 
   /// No description provided for @delete.
   ///
@@ -810,12 +1146,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Schedule name already exists'**
   String get duplicateScheduleName;
-
-  /// No description provided for @exportSuccess.
-  ///
-  /// In en, this message translates to:
-  /// **'Schedule data copied to clipboard'**
-  String get exportSuccess;
 
   /// No description provided for @importSchedule.
   ///
@@ -889,6 +1219,78 @@ abstract class AppLocalizations {
   /// **'Export Schedule'**
   String get exportSchedule;
 
+  /// No description provided for @exportScheduleAsCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy to Clipboard'**
+  String get exportScheduleAsCopy;
+
+  /// No description provided for @exportScheduleAsIcs.
+  ///
+  /// In en, this message translates to:
+  /// **'Export to Calendar File'**
+  String get exportScheduleAsIcs;
+
+  /// No description provided for @exportScheduleAsCopySuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule data copied to clipboard'**
+  String get exportScheduleAsCopySuccess;
+
+  /// No description provided for @exportScheduleAsCopyFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy failed, maybe you can try later'**
+  String get exportScheduleAsCopyFailed;
+
+  /// No description provided for @exportScheduleAsIcsTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Calendar File to...'**
+  String get exportScheduleAsIcsTo;
+
+  /// No description provided for @exportScheduleAsIcsSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'File saved successfully'**
+  String get exportScheduleAsIcsSuccess;
+
+  /// No description provided for @exportScheduleAsIcsFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'File save failed'**
+  String get exportScheduleAsIcsFailed;
+
+  /// No description provided for @exportScheduleAsIcsCanceled.
+  ///
+  /// In en, this message translates to:
+  /// **'File save canceled'**
+  String get exportScheduleAsIcsCanceled;
+
+  /// No description provided for @icsTeacherLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Teacher(s)'**
+  String get icsTeacherLabel;
+
+  /// No description provided for @exportScheduleAddToCalendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Import to Calendar'**
+  String get exportScheduleAddToCalendar;
+
+  /// No description provided for @exportScheduleAddToCalendarSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Imported to calendar'**
+  String get exportScheduleAddToCalendarSuccess;
+
+  /// No description provided for @exportScheduleAddToCalendarFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Import failed'**
+  String get exportScheduleAddToCalendarFailed;
+
   /// No description provided for @copySuffix.
   ///
   /// In en, this message translates to:
@@ -898,7 +1300,7 @@ abstract class AppLocalizations {
   /// No description provided for @notThisWeek.
   ///
   /// In en, this message translates to:
-  /// **'[Not this week]'**
+  /// **'[Not]'**
   String get notThisWeek;
 
   /// No description provided for @actualCurrentWeek.
@@ -1039,6 +1441,12 @@ abstract class AppLocalizations {
   /// **'Import All'**
   String get importAll;
 
+  /// No description provided for @importingProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Importing {current}/{total}...'**
+  String importingProgress(int current, int total);
+
   /// No description provided for @scuUnifiedAuth.
   ///
   /// In en, this message translates to:
@@ -1086,6 +1494,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Remember Password'**
   String get rememberPassword;
+
+  /// No description provided for @autoLogin.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto Login'**
+  String get autoLogin;
+
+  /// No description provided for @autoLoggingIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Logging in...'**
+  String get autoLoggingIn;
 
   /// No description provided for @loginButton.
   ///
@@ -1158,6 +1578,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed to load grades'**
   String get gradesLoadFailed;
+
+  /// No description provided for @gradesRefreshFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh failed, showing cached data'**
+  String get gradesRefreshFailed;
 
   /// No description provided for @gradesNoPassingData.
   ///
@@ -1507,6 +1933,60 @@ abstract class AppLocalizations {
   /// **'Please complete SCU Unified Identity login in the Profile page first'**
   String get trainProgramLoginRequired;
 
+  /// No description provided for @planCompletion.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan Completion'**
+  String get planCompletion;
+
+  /// No description provided for @planCompletionDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'View progress of each training program module'**
+  String get planCompletionDesc;
+
+  /// No description provided for @planCompletionNoData.
+  ///
+  /// In en, this message translates to:
+  /// **'No plan completion data'**
+  String get planCompletionNoData;
+
+  /// No description provided for @planCompletionTotalEarned.
+  ///
+  /// In en, this message translates to:
+  /// **'Earned Credits'**
+  String get planCompletionTotalEarned;
+
+  /// No description provided for @planCompletionCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get planCompletionCompleted;
+
+  /// No description provided for @planCompletionCredits.
+  ///
+  /// In en, this message translates to:
+  /// **'Credits'**
+  String get planCompletionCredits;
+
+  /// No description provided for @planCompletionCreditsUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'cr'**
+  String get planCompletionCreditsUnit;
+
+  /// No description provided for @planCompletionCourses.
+  ///
+  /// In en, this message translates to:
+  /// **'Courses'**
+  String get planCompletionCourses;
+
+  /// No description provided for @planCompletionRateLimited.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many requests, please try again later'**
+  String get planCompletionRateLimited;
+
   /// No description provided for @ccylTitle.
   ///
   /// In en, this message translates to:
@@ -1534,8 +2014,50 @@ abstract class AppLocalizations {
   /// No description provided for @ccylOrderedActivities.
   ///
   /// In en, this message translates to:
-  /// **'Reserved Activities'**
+  /// **'Reserved'**
   String get ccylOrderedActivities;
+
+  /// No description provided for @ccylMyCredits.
+  ///
+  /// In en, this message translates to:
+  /// **'Credit List'**
+  String get ccylMyCredits;
+
+  /// No description provided for @ccylSelect.
+  ///
+  /// In en, this message translates to:
+  /// **'Select'**
+  String get ccylSelect;
+
+  /// No description provided for @ccylSelectAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Select All'**
+  String get ccylSelectAll;
+
+  /// No description provided for @ccylExportEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Export to Email'**
+  String get ccylExportEmail;
+
+  /// No description provided for @ccylEmailAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'QQ Email'**
+  String get ccylEmailAddress;
+
+  /// No description provided for @ccylEmailHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter QQ email to receive the report'**
+  String get ccylEmailHint;
+
+  /// No description provided for @ccylExportSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Report sent to email'**
+  String get ccylExportSuccess;
 
   /// No description provided for @ccylSearchHint.
   ///
@@ -1753,12 +2275,6 @@ abstract class AppLocalizations {
   /// **'Liable Teacher'**
   String get ccylLiableTeacher;
 
-  /// No description provided for @ccylLiableTeacherPhone.
-  ///
-  /// In en, this message translates to:
-  /// **'Liable Teacher Phone'**
-  String get ccylLiableTeacherPhone;
-
   /// No description provided for @ccylActivities.
   ///
   /// In en, this message translates to:
@@ -1921,6 +2437,24 @@ abstract class AppLocalizations {
   /// **'Operation successful'**
   String get networkDeviceOperationSuccess;
 
+  /// No description provided for @loginFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Login failed'**
+  String get loginFailed;
+
+  /// No description provided for @invalidCaptcha.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid captcha, please try again'**
+  String get invalidCaptcha;
+
+  /// No description provided for @loginFailedWillLock.
+  ///
+  /// In en, this message translates to:
+  /// **'Login failed, {count} more attempt(s) will lock your account'**
+  String loginFailedWillLock(int count);
+
   /// No description provided for @ccylBindFailed.
   ///
   /// In en, this message translates to:
@@ -1938,6 +2472,222 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed to offline device'**
   String get networkOfflineFailed;
+
+  /// No description provided for @balanceQuery.
+  ///
+  /// In en, this message translates to:
+  /// **'Balance Query'**
+  String get balanceQuery;
+
+  /// No description provided for @balanceQueryDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Query electricity and AC fee balance'**
+  String get balanceQueryDesc;
+
+  /// No description provided for @electricityFee.
+  ///
+  /// In en, this message translates to:
+  /// **'Electricity'**
+  String get electricityFee;
+
+  /// No description provided for @acFee.
+  ///
+  /// In en, this message translates to:
+  /// **'AC Fee'**
+  String get acFee;
+
+  /// No description provided for @balance.
+  ///
+  /// In en, this message translates to:
+  /// **'Balance'**
+  String get balance;
+
+  /// No description provided for @bindRoom.
+  ///
+  /// In en, this message translates to:
+  /// **'Bind Room'**
+  String get bindRoom;
+
+  /// No description provided for @bindNewRoom.
+  ///
+  /// In en, this message translates to:
+  /// **'Bind New Room'**
+  String get bindNewRoom;
+
+  /// No description provided for @switchRoom.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch Room'**
+  String get switchRoom;
+
+  /// No description provided for @deleteRoom.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Room'**
+  String get deleteRoom;
+
+  /// No description provided for @selectUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Unit'**
+  String get selectUnit;
+
+  /// No description provided for @inputInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Input Info'**
+  String get inputInfo;
+
+  /// No description provided for @stepCampus.
+  ///
+  /// In en, this message translates to:
+  /// **'Cmp'**
+  String get stepCampus;
+
+  /// No description provided for @stepBuilding.
+  ///
+  /// In en, this message translates to:
+  /// **'Bld'**
+  String get stepBuilding;
+
+  /// No description provided for @stepUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit'**
+  String get stepUnit;
+
+  /// No description provided for @stepInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Info'**
+  String get stepInfo;
+
+  /// No description provided for @inputBindingInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Input Binding Info'**
+  String get inputBindingInfo;
+
+  /// No description provided for @cusName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get cusName;
+
+  /// No description provided for @cusNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter name'**
+  String get cusNameHint;
+
+  /// No description provided for @roomNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Room Number'**
+  String get roomNumber;
+
+  /// No description provided for @roomNumberHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter room number, e.g. 301C'**
+  String get roomNumberHint;
+
+  /// No description provided for @pricePerUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Price per unit'**
+  String get pricePerUnit;
+
+  /// No description provided for @balanceQueryLoginRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Please complete SCU Unified Identity login in the Profile page first'**
+  String get balanceQueryLoginRequired;
+
+  /// No description provided for @balanceQueryNoBinding.
+  ///
+  /// In en, this message translates to:
+  /// **'You haven\'t bound any room yet, please bind first'**
+  String get balanceQueryNoBinding;
+
+  /// No description provided for @scuLoginDisclaimerPwd.
+  ///
+  /// In en, this message translates to:
+  /// **'When \'Remember Password\' is enabled, your password is encrypted and stored locally using system-level encryption'**
+  String get scuLoginDisclaimerPwd;
+
+  /// No description provided for @scuLoginDisclaimerOcr.
+  ///
+  /// In en, this message translates to:
+  /// **'Captcha is recognized by a local OCR model'**
+  String get scuLoginDisclaimerOcr;
+
+  /// No description provided for @scuLoginDisclaimerPrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'We do not collect any personal information'**
+  String get scuLoginDisclaimerPrivacy;
+
+  /// No description provided for @openSourceLicenseDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'This app is open-sourced under AGPL-3.0'**
+  String get openSourceLicenseDesc;
+
+  /// No description provided for @academicCalendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Academic Calendar'**
+  String get academicCalendar;
+
+  /// No description provided for @academicCalendarDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'View SCU academic calendar and semester schedule'**
+  String get academicCalendarDesc;
+
+  /// No description provided for @selectAcademicYear.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Academic Year'**
+  String get selectAcademicYear;
+
+  /// No description provided for @userInfoLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading user info...'**
+  String get userInfoLoading;
+
+  /// No description provided for @userInfoLoadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load user info'**
+  String get userInfoLoadFailed;
+
+  /// No description provided for @userInfoRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to retry'**
+  String get userInfoRetry;
+
+  /// No description provided for @labelBookBorrowCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Books Borrowed'**
+  String get labelBookBorrowCount;
+
+  /// No description provided for @labelCampusCardBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Card Balance'**
+  String get labelCampusCardBalance;
+
+  /// No description provided for @labelNetworkFeeBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Network Fee'**
+  String get labelNetworkFeeBalance;
 }
 
 class _AppLocalizationsDelegate

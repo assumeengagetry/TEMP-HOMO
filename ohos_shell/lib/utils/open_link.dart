@@ -1,4 +1,4 @@
-﻿import 'package:bugaoshan_ohos/utils/constants.dart';
+﻿import 'package:bugaoshan/utils/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 Future<void> openLink(String link) async {
@@ -11,4 +11,8 @@ Future<void> openProjectRepository() async {
 
 Future<void> openDeveloperTeam() async {
   await openLink(orgLink);
+}
+
+Future<void> openLicense() async {
+  await openLink("$appLink/blob/main/LICENSE");
 }

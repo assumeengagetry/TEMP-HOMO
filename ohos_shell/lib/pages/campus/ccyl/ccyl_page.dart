@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:bugaoshan_ohos/l10n/app_localizations.dart';
-import 'package:bugaoshan_ohos/pages/campus/ccyl/activities_tab.dart';
-import 'package:bugaoshan_ohos/pages/campus/ccyl/my_activities_tab.dart';
-import 'package:bugaoshan_ohos/pages/campus/ccyl/ordered_activities_tab.dart';
-import 'package:bugaoshan_ohos/pages/campus/ccyl/ccyl_bind_page.dart';
-import 'package:bugaoshan_ohos/providers/ccyl_provider.dart';
-import 'package:bugaoshan_ohos/providers/scu_auth_provider.dart';
-import 'package:bugaoshan_ohos/injection/injector.dart';
+import 'package:bugaoshan/l10n/app_localizations.dart';
+import 'package:bugaoshan/pages/campus/ccyl/activities_tab.dart';
+import 'package:bugaoshan/pages/campus/ccyl/my_activities_tab.dart';
+import 'package:bugaoshan/pages/campus/ccyl/ordered_activities_tab.dart';
+import 'package:bugaoshan/pages/campus/ccyl/credit_list_page.dart';
+import 'package:bugaoshan/pages/campus/ccyl/ccyl_bind_page.dart';
+import 'package:bugaoshan/providers/ccyl_provider.dart';
+import 'package:bugaoshan/providers/scu_auth_provider.dart';
+import 'package:bugaoshan/injection/injector.dart';
 
 class CcylPage extends StatefulWidget {
   const CcylPage({super.key});
@@ -23,6 +24,7 @@ class _CcylPageState extends State<CcylPage> {
     ActivitiesTab(),
     MyActivitiesTab(),
     OrderedActivitiesTab(),
+    CreditListPage(),
   ];
 
   void _onTabTapped(int index) {
@@ -44,6 +46,21 @@ class _CcylPageState extends State<CcylPage> {
 
         // 未登录校园账号
         if (!auth.isLoggedIn) {
+          if (auth.isAutoLoggingIn) {
+            return Scaffold(
+              appBar: AppBar(title: Text(l10n.ccylTitle)),
+              body: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const CircularProgressIndicator(),
+                    const SizedBox(height: 16),
+                    Text(l10n.autoLoggingIn),
+                  ],
+                ),
+              ),
+            );
+          }
           return Scaffold(
             appBar: AppBar(title: Text(l10n.ccylTitle)),
             body: Center(
@@ -52,7 +69,7 @@ class _CcylPageState extends State<CcylPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(l10n.ccylLoginRequired, textAlign: TextAlign.center),
+                    Text(l10n.loginRequired, textAlign: TextAlign.center),
                     const SizedBox(height: 16),
                     ElevatedButton.icon(
                       onPressed: () {
@@ -61,7 +78,7 @@ class _CcylPageState extends State<CcylPage> {
                         ).popUntil((route) => route.isFirst);
                       },
                       icon: const Icon(Icons.person),
-                      label: const Text('前往登录'),
+                      label: Text(l10n.goToLogin),
                     ),
                   ],
                 ),
@@ -126,6 +143,11 @@ class _CcylPageState extends State<CcylPage> {
                 icon: const Icon(Icons.bookmark_outline),
                 selectedIcon: const Icon(Icons.bookmark),
                 label: l10n.ccylOrderedActivities,
+              ),
+              NavigationDestination(
+                icon: const Icon(Icons.assignment_outlined),
+                selectedIcon: const Icon(Icons.assignment),
+                label: l10n.ccylMyCredits,
               ),
             ],
           ),

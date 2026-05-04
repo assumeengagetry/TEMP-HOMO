@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:bugaoshan_ohos/injection/injector.dart';
-import 'package:bugaoshan_ohos/l10n/app_localizations.dart';
-import 'package:bugaoshan_ohos/pages/campus/train_program/models/train_program.dart';
-import 'package:bugaoshan_ohos/pages/campus/train_program/train_program_provider.dart';
-import 'package:bugaoshan_ohos/providers/scu_auth_provider.dart';
+import 'package:bugaoshan/injection/injector.dart';
+import 'package:bugaoshan/l10n/app_localizations.dart';
+import 'package:bugaoshan/pages/campus/train_program/models/train_program.dart';
+import 'package:bugaoshan/pages/campus/train_program/train_program_provider.dart';
+import 'package:bugaoshan/providers/scu_auth_provider.dart';
 
 class TrainProgramPage extends StatefulWidget {
   const TrainProgramPage({super.key});
@@ -33,12 +33,43 @@ class _TrainProgramPageState extends State<TrainProgramPage> {
         builder: (context, _) {
           final auth = getIt<ScuAuthProvider>();
           if (!auth.isLoggedIn) {
+            if (auth.isAutoLoggingIn) {
+              return Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const CircularProgressIndicator(),
+                    const SizedBox(height: 16),
+                    Text(l10n.autoLoggingIn),
+                  ],
+                ),
+              );
+            }
             return Center(
               child: Padding(
                 padding: const EdgeInsets.all(24),
-                child: Text(
-                  l10n.trainProgramLoginRequired,
-                  textAlign: TextAlign.center,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.login,
+                      size: 48,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      l10n.loginRequired,
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 16),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.of(context).popUntil((route) => route.isFirst);
+                      },
+                      icon: const Icon(Icons.person),
+                      label: Text(l10n.goToLogin),
+                    ),
+                  ],
                 ),
               ),
             );

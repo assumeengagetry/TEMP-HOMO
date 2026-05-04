@@ -1,14 +1,17 @@
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:bugaoshan_ohos/pages/campus/train_program/train_program_provider.dart';
-import 'package:bugaoshan_ohos/providers/app_info_provider.dart';
-import 'package:bugaoshan_ohos/providers/app_config_provider.dart';
-import 'package:bugaoshan_ohos/providers/ccyl_provider.dart';
-import 'package:bugaoshan_ohos/providers/course_provider.dart';
-import 'package:bugaoshan_ohos/providers/grades_provider.dart';
-import 'package:bugaoshan_ohos/providers/scu_auth_provider.dart';
-import 'package:bugaoshan_ohos/serivces/database_service.dart';
+import 'package:bugaoshan/pages/campus/plan_completion/plan_completion_provider.dart';
+import 'package:bugaoshan/pages/campus/train_program/train_program_provider.dart';
+import 'package:bugaoshan/providers/app_info_provider.dart';
+import 'package:bugaoshan/providers/app_config_provider.dart';
+import 'package:bugaoshan/providers/ccyl_provider.dart';
+import 'package:bugaoshan/providers/course_provider.dart';
+import 'package:bugaoshan/providers/grades_provider.dart';
+import 'package:bugaoshan/providers/scu_auth_provider.dart';
+import 'package:bugaoshan/services/database_service.dart';
+import 'package:bugaoshan/services/update_service.dart';
+import 'package:bugaoshan/services/widget_update_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'injector.config.dart';
@@ -53,7 +56,9 @@ void _configureAsyncDependencies() {
   getIt.registerSingletonAsync<ScuAuthProvider>(() async {
     await getIt.isReady<SharedPreferences>();
     final prefs = getIt<SharedPreferences>();
-    return ScuAuthProvider(prefs);
+    final provider = ScuAuthProvider(prefs);
+    await provider.init();
+    return provider;
   });
   getIt.registerSingletonAsync<CcylProvider>(() async {
     await getIt.isReady<SharedPreferences>();
@@ -72,12 +77,30 @@ void _configureAsyncDependencies() {
     final auth = getIt<ScuAuthProvider>();
     return TrainProgramProvider(auth);
   });
+  getIt.registerSingletonAsync<PlanCompletionProvider>(() async {
+    await getIt.isReady<SharedPreferences>();
+    await getIt.isReady<ScuAuthProvider>();
+    final prefs = getIt<SharedPreferences>();
+    final auth = getIt<ScuAuthProvider>();
+    return PlanCompletionProvider(prefs, auth);
+  });
+  getIt.registerSingletonAsync<UpdateService>(() async {
+    return UpdateService();
+  });
+  getIt.registerSingletonAsync<WidgetUpdateService>(() async {
+    await getIt.isReady<CourseProvider>();
+    final courseProvider = getIt<CourseProvider>();
+    final service = WidgetUpdateService();
+    // Wire up callback so widget updates on data changes
+    courseProvider.onCoursesChanged = () {
+      service.updateWidgetData().catchError((e) {
+        // Ignore widget update errors to prevent unhandled async errors
+      });
+    };
+    return service;
+  });
 }
 
 Future<void> ensureBasicDependencies() async {
-  await getIt.isReady<CourseProvider>();
-  await getIt.isReady<ScuAuthProvider>();
-  await getIt.isReady<CcylProvider>();
-  await getIt.isReady<GradesProvider>();
-  await getIt.isReady<TrainProgramProvider>();
+  await getIt.allReady();
 }

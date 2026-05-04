@@ -15,6 +15,64 @@ class AppLocalizationsZh extends AppLocalizations {
   String get selfLanguage => '中文';
 
   @override
+  String get wizardWelcomeTitle => '欢迎使用不高山上';
+
+  @override
+  String get wizardWelcomeDesc => '你的校园生活助手，一站式查看课表、成绩与校园服务';
+
+  @override
+  String get wizardLoginTitle => '登录与导入课表';
+
+  @override
+  String get wizardLoginStep1 => '完成统一身份认证登录';
+
+  @override
+  String get wizardLoginStep2 => '从教务系统导入课表';
+
+  @override
+  String get wizardLoginDone => '已登录';
+
+  @override
+  String get wizardLoginButton => '去登录';
+
+  @override
+  String get wizardImportButton => '导入课表';
+
+  @override
+  String get wizardImportHint => '登录后可自动获取课表';
+
+  @override
+  String get wizardFeatureTitle => '探索更多功能';
+
+  @override
+  String get wizardFeatureCourse => '课表管理';
+
+  @override
+  String get wizardFeatureCourseDesc => '查看每周课程安排与多课表管理，支持从教务系统一键导入、分享与导出为日历文件';
+
+  @override
+  String get wizardFeatureCampus => '校园服务';
+
+  @override
+  String get wizardFeatureCampusDesc =>
+      '查询空闲教室与学业成绩，参与第二课堂活动，查询电费与空调余额，管理校园网设备';
+
+  @override
+  String get wizardFeatureProfile => '个人中心';
+
+  @override
+  String get wizardFeatureProfileDesc => '使用统一身份认证登录并绑定第二课堂，自定义主题颜色、深色模式与语言偏好';
+
+  @override
+  String get onboardingSkip => '跳过';
+
+  @override
+  String get onboardingNext => '下一步';
+
+  @override
+  String get onboardingStart => '立即体验';
+
+  @override
   String get course => '课程';
 
   @override
@@ -45,7 +103,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get selectCampus => '选择校区';
 
   @override
-  String get selectBuilding => '选择教学楼';
+  String get selectBuilding => '选择楼栋';
 
   @override
   String get allBuildings => '全部教学楼';
@@ -63,6 +121,31 @@ class AppLocalizationsZh extends AppLocalizations {
   String get borrowed => '已借用';
 
   @override
+  String get classroomPeriodExam => '考试中';
+
+  @override
+  String get classroomPeriodExperiment => '实验中';
+
+  @override
+  String classroomTeachingWeek(int week) {
+    return '第 $week 周';
+  }
+
+  @override
+  String classroomQueryDate(String date) {
+    return '查询日期: $date';
+  }
+
+  @override
+  String get classroomCanBorrow => '可借用';
+
+  @override
+  String get classroomCannotBorrow => '不可借用';
+
+  @override
+  String get classroomRemark => '备注';
+
+  @override
   String get period => '节次';
 
   @override
@@ -73,6 +156,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get campusNetworkRequired => '该功能仅限校园网访问，请连接校园网或使用学校 VPN 后重试';
+
+  @override
+  String get campusNetworkRequiredAtNight =>
+      '该时段（0:00-6:00）仅限校园网访问，请连接校园网或使用学校 VPN 后重试';
 
   @override
   String get appOnly => '仅 App 端可使用';
@@ -94,6 +181,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get confirm => '确认';
+
+  @override
+  String get today => '今天';
 
   @override
   String currentAnimationDuration(Object value) {
@@ -151,7 +241,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get version => '版本';
 
   @override
-  String get description => '描述';
+  String get gitTag => 'Git 标签';
 
   @override
   String get appDescription => '探索一切，尽在不高山上';
@@ -183,6 +273,33 @@ class AppLocalizationsZh extends AppLocalizations {
   String get goToReleases => '前往 Releases';
 
   @override
+  String get startUpdate => '开始更新';
+
+  @override
+  String get startUpdatePreview => '更新到预览版';
+
+  @override
+  String get updateToLatest => '升级到最新版本';
+
+  @override
+  String get updateToStable => '更新到最新稳定版';
+
+  @override
+  String get updateToPreview => '更新到最新版（包括预览版）';
+
+  @override
+  String get downloading => '正在下载';
+
+  @override
+  String get updateFailed => '更新失败';
+
+  @override
+  String get preReleaseWarning => '这是预发布版本，使用时请注意。';
+
+  @override
+  String get releaseNotes => '更新日志';
+
+  @override
   String get neverMind => '算了吧';
 
   @override
@@ -193,6 +310,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get environmentInfo => '环境信息';
+
+  @override
+  String get testPage => '测试页面';
+
+  @override
+  String get forceUpdate => '更新到最新版本（含预览版）';
 
   @override
   String get scheduleSetting => '课表设置';
@@ -316,10 +439,40 @@ class AppLocalizationsZh extends AppLocalizations {
   String get semesterStartDate => '学期开始日期';
 
   @override
+  String get setCurrentWeek => '设置当前周数';
+
+  @override
+  String get setCurrentWeekHint => '将根据当前周数自动推算学期开始日期';
+
+  @override
+  String get autoFetchCurrentWeek => '自动获取当前周数';
+
+  @override
+  String get autoFetchCurrentWeekHint => '从教务系统获取当前教学周';
+
+  @override
+  String get fetchingCurrentWeek => '正在获取...';
+
+  @override
+  String get loginRequired => '请先在「我的」页面完成统一身份认证登录';
+
+  @override
+  String get goToLogin => '前往登录';
+
+  @override
   String get semesterEndDate => '学期结束日期';
 
   @override
   String get displaySetting => '显示设置';
+
+  @override
+  String get courseCardSection => '课程卡片';
+
+  @override
+  String get courseGridSection => '课表网格';
+
+  @override
+  String get otherSection => '其他';
 
   @override
   String get colorOpacity => '颜色不透明度';
@@ -334,6 +487,18 @@ class AppLocalizationsZh extends AppLocalizations {
   String get courseRowHeight => '课表网格高度';
 
   @override
+  String get backgroundImage => '背景图片';
+
+  @override
+  String get setBackgroundImage => '设置背景图片';
+
+  @override
+  String get removeBackgroundImage => '移除背景图片';
+
+  @override
+  String get backgroundImageOpacity => '背景图片不透明度';
+
+  @override
   String get showTeacher => '显示教师';
 
   @override
@@ -343,10 +508,19 @@ class AppLocalizationsZh extends AppLocalizations {
   String get showWeekend => '显示周末';
 
   @override
+  String get showNonCurrentWeekCourses => '显示非本周课程';
+
+  @override
   String get save => '保存';
 
   @override
   String get cancel => '取消';
+
+  @override
+  String get back => '上一步';
+
+  @override
+  String get next => '下一步';
 
   @override
   String get delete => '删除';
@@ -371,9 +545,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get duplicateScheduleName => '课表名称已存在';
-
-  @override
-  String get exportSuccess => '课表数据已复制到剪贴板';
 
   @override
   String get importSchedule => '导入课表';
@@ -414,6 +585,42 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get exportSchedule => '导出课表';
+
+  @override
+  String get exportScheduleAsCopy => '复制到剪切板';
+
+  @override
+  String get exportScheduleAsIcs => '导出为日历文件';
+
+  @override
+  String get exportScheduleAsCopySuccess => '课表已复制到剪切板';
+
+  @override
+  String get exportScheduleAsCopyFailed => '复制失败，您可以稍后再试';
+
+  @override
+  String get exportScheduleAsIcsTo => '保存日历文件到...';
+
+  @override
+  String get exportScheduleAsIcsSuccess => '保存成功';
+
+  @override
+  String get exportScheduleAsIcsFailed => '保存失败';
+
+  @override
+  String get exportScheduleAsIcsCanceled => '取消保存';
+
+  @override
+  String get icsTeacherLabel => '教师';
+
+  @override
+  String get exportScheduleAddToCalendar => '一键导入到日历';
+
+  @override
+  String get exportScheduleAddToCalendarSuccess => '已导入到日历';
+
+  @override
+  String get exportScheduleAddToCalendarFailed => '导入失败';
 
   @override
   String get copySuffix => ' (副本)';
@@ -497,6 +704,11 @@ class AppLocalizationsZh extends AppLocalizations {
   String get importAll => '全部导入';
 
   @override
+  String importingProgress(int current, int total) {
+    return '正在导入 $current/$total...';
+  }
+
+  @override
   String get scuUnifiedAuth => '统一身份认证';
 
   @override
@@ -519,6 +731,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get rememberPassword => '记住密码';
+
+  @override
+  String get autoLogin => '自动登录';
+
+  @override
+  String get autoLoggingIn => '正在登录中...';
 
   @override
   String get loginButton => '登录';
@@ -555,6 +773,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get gradesLoadFailed => '成绩加载失败';
+
+  @override
+  String get gradesRefreshFailed => '刷新失败，显示的是缓存数据';
 
   @override
   String get gradesNoPassingData => '暂无及格成绩数据';
@@ -735,6 +956,33 @@ class AppLocalizationsZh extends AppLocalizations {
   String get trainProgramLoginRequired => '请先在「我的」页面完成统一身份认证登录';
 
   @override
+  String get planCompletion => '方案修读情况';
+
+  @override
+  String get planCompletionDesc => '查看培养方案各模块的修读进度';
+
+  @override
+  String get planCompletionNoData => '暂无方案修读数据';
+
+  @override
+  String get planCompletionTotalEarned => '已获学分';
+
+  @override
+  String get planCompletionCompleted => '已完成模块';
+
+  @override
+  String get planCompletionCredits => '学分';
+
+  @override
+  String get planCompletionCreditsUnit => '学分';
+
+  @override
+  String get planCompletionCourses => '课程';
+
+  @override
+  String get planCompletionRateLimited => '请勿频繁刷新，请稍后再试';
+
+  @override
   String get ccylTitle => '第二课堂';
 
   @override
@@ -748,6 +996,27 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get ccylOrderedActivities => '预约的活动';
+
+  @override
+  String get ccylMyCredits => '成绩单';
+
+  @override
+  String get ccylSelect => '选择';
+
+  @override
+  String get ccylSelectAll => '全选';
+
+  @override
+  String get ccylExportEmail => '导出到邮箱';
+
+  @override
+  String get ccylEmailAddress => 'QQ邮箱';
+
+  @override
+  String get ccylEmailHint => '请输入接收成绩单的QQ邮箱';
+
+  @override
+  String get ccylExportSuccess => '成绩单已发送至邮箱';
 
   @override
   String get ccylSearchHint => '搜索活动名称';
@@ -858,9 +1127,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get ccylLiableTeacher => '指导老师';
 
   @override
-  String get ccylLiableTeacherPhone => '指导老师电话';
-
-  @override
   String get ccylActivities => '系列活动';
 
   @override
@@ -942,6 +1208,17 @@ class AppLocalizationsZh extends AppLocalizations {
   String get networkDeviceOperationSuccess => '操作成功';
 
   @override
+  String get loginFailed => '登录失败';
+
+  @override
+  String get invalidCaptcha => '验证码错误，请重试';
+
+  @override
+  String loginFailedWillLock(int count) {
+    return '登录失败，再输错 $count 次将锁定账户';
+  }
+
+  @override
   String get ccylBindFailed => '绑定失败，请稍后重试';
 
   @override
@@ -949,6 +1226,114 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get networkOfflineFailed => '下线失败';
+
+  @override
+  String get balanceQuery => '余额查询';
+
+  @override
+  String get balanceQueryDesc => '查询电费和空调费用余额';
+
+  @override
+  String get electricityFee => '电费';
+
+  @override
+  String get acFee => '空调费';
+
+  @override
+  String get balance => '余额';
+
+  @override
+  String get bindRoom => '绑定房间';
+
+  @override
+  String get bindNewRoom => '绑定新房间';
+
+  @override
+  String get switchRoom => '切换房间';
+
+  @override
+  String get deleteRoom => '删除房间';
+
+  @override
+  String get selectUnit => '选择单元';
+
+  @override
+  String get inputInfo => '输入信息';
+
+  @override
+  String get stepCampus => '校区';
+
+  @override
+  String get stepBuilding => '楼栋';
+
+  @override
+  String get stepUnit => '单元';
+
+  @override
+  String get stepInfo => '信息';
+
+  @override
+  String get inputBindingInfo => '输入绑定信息';
+
+  @override
+  String get cusName => '姓名';
+
+  @override
+  String get cusNameHint => '请输入姓名';
+
+  @override
+  String get roomNumber => '房间号';
+
+  @override
+  String get roomNumberHint => '请输入房间号，如 301C';
+
+  @override
+  String get pricePerUnit => '单价';
+
+  @override
+  String get balanceQueryLoginRequired => '请先在「我的」页面完成统一身份认证登录';
+
+  @override
+  String get balanceQueryNoBinding => '您还没有绑定房间，请先绑定';
+
+  @override
+  String get scuLoginDisclaimerPwd => '当使用记住密码功能时，密码通过系统级加密仅存储在本机';
+
+  @override
+  String get scuLoginDisclaimerOcr => '验证码使用本地OCR模型识别';
+
+  @override
+  String get scuLoginDisclaimerPrivacy => '我们不会收集任何信息';
+
+  @override
+  String get openSourceLicenseDesc => 'This app is open-sourced under AGPL-3.0';
+
+  @override
+  String get academicCalendar => '校历查看';
+
+  @override
+  String get academicCalendarDesc => '查看四川大学校历，了解学期安排';
+
+  @override
+  String get selectAcademicYear => '选择学年';
+
+  @override
+  String get userInfoLoading => '正在加载个人信息...';
+
+  @override
+  String get userInfoLoadFailed => '个人信息加载失败';
+
+  @override
+  String get userInfoRetry => '点击重试';
+
+  @override
+  String get labelBookBorrowCount => '图书借阅量';
+
+  @override
+  String get labelCampusCardBalance => '校园卡余额';
+
+  @override
+  String get labelNetworkFeeBalance => '网费余额';
 }
 
 /// The translations for Chinese, as used in China, using the Han script (`zh_Hans_CN`).
@@ -960,10 +1345,4 @@ class AppLocalizationsZhHansCn extends AppLocalizationsZh {
 
   @override
   String get selfLanguage => '中文-简体-中国';
-
-  @override
-  String get utilitiesSection => '实用工具';
-
-  @override
-  String get academicSection => '学术';
 }
