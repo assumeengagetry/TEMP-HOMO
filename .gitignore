@@ -1,0 +1,54 @@
+# OS / editor noise
+.DS_Store
+*.log
+.vscode/
+ohos_shell/*.iml
+
+# Flutter / Dart generated files
+**/.dart_tool/
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/.pub/
+**/.pub-cache/
+**/build/
+**/coverage/
+**/doc/api/
+app.*.symbols
+app.*.map.json
+
+# OpenHarmony / Hvigor generated files
+**/node_modules/
+**/oh_modules/
+**/.hvigor/
+**/.cxx/
+**/.test/
+**/.preview/
+**/local.properties
+**/BuildProfile.ets
+**/GeneratedPluginRegistrant.ets
+**/oh-package-lock.json5
+
+# Local Flutter-OH hvigor plugin files; CI recreates these with machine paths.
+ohos_shell/ohos/package.json
+ohos_shell/ohos/package-lock.json
+
+# Flutter assets and native libs copied into the OHOS wrapper during builds.
+**/src/main/resources/rawfile/flutter_assets/
+**/libs/**/libapp.so
+**/libs/**/libflutter.so
+**/libs/**/libvmservice_snapshot.so
+
+# Local signing material and packaged artifacts
+*.hap
+*.hsp
+*.p12
+*.cer
+*.csr
+*.jks
+*.keystore
+*.pem
+*.p7b
+*.p7s
+
+# Local SDK/tooling caches
+.fvm/
