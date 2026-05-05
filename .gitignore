@@ -52,3 +52,4 @@ ohos_shell/ohos/package-lock.json
 
 # Local SDK/tooling caches
 .fvm/
+.idea/
